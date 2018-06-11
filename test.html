@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test api requests</title>
+	<script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<button id="getIssue">Send API Request - GET Issues</button>
+
+	<button id="postIssue">Send API Request - POST to Issues</button>
+
+	<script type="text/javascript">
+		$("#getIssue").click(() => {
+			console.log("get issue");
+
+				$.ajax({
+				  url: "https://api.github.com/repos/joeyklee/itp-tagged-resources/issues",
+				  success: function(data){
+				  	console.log(data)
+				  },
+				  dataType: 'json'
+				});
+		})
+
+		$("#postIssue").click(() => {
+			
+			console.log("post issue");
+			$.ajax({
+				type: "POST",
+				headers: {
+	        'Content-Type': 'application/json',
+	        'Authorization': `token ${}`
+		    },
+			  url: "https://api.github.com/repos/joeyklee/itp-tagged-resources/issues",
+			  data:'{"title":"Hallo from Prototype Authenticated App", "body":"Wie gehts Amigo?"}',
+			  success: function(data){
+			  	console.log(data)
+			  },
+			  dataType: 'json'
+			});
+		})
+	</script>
+</body>
+</html>
