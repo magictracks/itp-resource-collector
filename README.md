@@ -1,4 +1,4 @@
-# PLEASE IGNORE - NOT READY FOR TESTING YET!
+# DISCLAIMER: still testing! <3 <3 <3
 
 # ITP Resource Collector
 
@@ -21,7 +21,6 @@ npm start
 Terminal window 2: Start mongodb
 
 If you don't have mongodb installed on your machine go to: [install mongodb with homebrew](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#install-mongodb-community-edition-with-homebrew)
-
 ```
 mongod
 ```
