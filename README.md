@@ -1,15 +1,53 @@
 # ITP Resource Collector
 
+A browser plugin/web application that allows you to add tag and add learning materials from across the web 
+
 ## Setup
 
 ```
 npm install
-
+npm start
+// or nodemon index.js 
 ```
 
-See: https://github.com/sitepoint-editors/OpenAuthWithPassport
+## Workflow
 
-https://github.com/passport/express-4.x-facebook-example/blob/master/server.js
+User auths app ==> token is generated & stored to db w/ user profile ==> each time user makes request we use their access token to make posts to the itp-tagged-resources issues
 
 
-https://stackoverflow.com/questions/25654617/using-the-returned-token-to-access-github-api
+## Example: Create an issue from the Commandline
+
+see: https://developer.github.com/v3/issues/#create-an-issue
+
+First login in to [Github](https://github.com) and generate your personal access token. You'll need to make sure to set the permissions on that token to `[x] public_repo`.
+
+Then, in your terminal: 
+
+```
+curl --header "Content-Type: application/json" \
+     --header "Authorization: token <Your Personal Access Token>" \
+     --data '{
+        "title": "Testing 1",
+        "body": "## Description <br><br> hello, I am a description. <br><br> ## Tags <br> [`beginner`, `30 min`, `sketching`, `concept`] <br><br> ## URL <br><br> https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw ",
+        "assignees": [],
+        "labels": []
+        }' \
+     --request POST https://api.github.com/repos/joeyklee/itp-tagged-resources/issues
+```
+
+`Where`:
+
+* `curl`: the command to make requests via your terminal
+* `--header "Content-Type: application/json"`: setting the header to send JSON as data
+* `--header "Authorization: token <Your Personal Access Token>"`: adding auth to your POST request, you'll need to fill in `<Your Personal Access Token>` with your personal access token generated on Github. To do this:
+    - Go to: Github.com ==> settings (top right corner drop down menu) ==> developer settings ==> personal access tokens ==> generate new token ==> input: `<some token name>` and **make sure to check the checkbox where is says** select scopes > repo > "`public_repo`" (otherwise your access token won't be able to post to public repos)
+    - For a browser plugin, this will be handled via Oauth into the browser plugin.
+* `--data {...}`: the data flag is followed by a json with the data for the github issue. The min an issue needs is the `title` property.
+* `--request POST https://api.github.com/repos/joeyklee/itp-tagged-resources/issues`: here, we make a POST request to the github api to post in our data to the issues of `itp-tagged-resources`
+
+
+## References
+
+- See: https://github.com/sitepoint-editors/OpenAuthWithPassport
+- https://github.com/passport/express-4.x-facebook-example/blob/master/server.js
+- https://stackoverflow.com/questions/25654617/using-the-returned-token-to-access-github-api
