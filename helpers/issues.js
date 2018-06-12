@@ -8,21 +8,27 @@ exports.addIssue = function(req, res){
 			// TODO: make a post request to the github API using the accessToken 
 			db.User.findOne({username: req.user.username})
 			  .then(function(user){
-					console.log(req.body)			
+					console.log(req.body)	
+					console.log(user);
 					let options = {
-						uri: `https://api.github.com/repos/joeyklee/itp-tagged-resources/issues`,
-						type:"POST",
-						body: req.body,
+						method: 'POST',
+						uri: `https://api.github.com/repos/joeyklee/itp-tagged-resources/issues?access_token=${user.accessToken}`, //
+						body: {"title": "hello from prototype", "body": "hello there lovely person!"},//JSON.stringify(req.body),
+						json:true,
 						headers: {
-							"User-Agent": `${req.user.username}`,
-							"Authentication": `token ${req.user.accessToken}`
+							"User-Agent": `${user.username}`,
+							"Content-Type": "application/json",
+							"Authentication": `token ${user.accessToken}`
 						}
 					}
 
 					rp(options).then(data => {
 						console.log(data);
 						res.send("done!")	
-					})
+					}).catch(function (err) {
+		        // POST failed...
+		        console.log(err);
+			    });
 
 					 
 			  })

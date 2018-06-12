@@ -6,10 +6,24 @@ A browser plugin/web application that allows you to add tag and add learning mat
 
 ## Setup
 
+Install the dependencies:
 ```
 npm install
+```
+
+Terminal window 1: Start nodejs
+```
+
 npm start
 // or nodemon index.js 
+```
+
+Terminal window 2: Start mongodb
+
+If you don't have mongodb installed on your machine go to: [install mongodb with homebrew](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#install-mongodb-community-edition-with-homebrew)
+
+```
+mongod
 ```
 
 ## Workflow
