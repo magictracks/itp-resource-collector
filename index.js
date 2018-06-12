@@ -65,8 +65,18 @@ passport.use(new GitHubStrategy({
         .then(function(user){
 
           if(user !== null){
-            console.log("user exists! ", user);
-
+            if(user.accessToken !== accessToken){
+              console.log("user exists and is being updated! ", user);
+              db.User.findOneAndUpdate(
+                {username: profile.username}, // find
+                { accessToken: accessToken }, // set
+                {returnOriginal: false}, // return the new
+                function(err, doc){
+                  console.log("updated user accessToken to:", doc);
+                })
+            } else {
+              console.log("user exists and does not need to be updated! ", user);
+            }
           } else {
             console.log("new user! ", user);
 
@@ -85,7 +95,7 @@ passport.use(new GitHubStrategy({
             // });
           }
         })
-        
+
         return cb(null, profile);
   }
 ));
