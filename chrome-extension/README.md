@@ -10,3 +10,14 @@ open new tab and navigate to chrome://extensions
 drag and drop the folder "save-resources-extension" 
 ```
 
+![](img/extensions.jpg)
+
+## Use case
+
+### Option 1
+![](img/option-1.jpg)
+
+### Option 2
+![](img/option-2.jpg)
+
+
