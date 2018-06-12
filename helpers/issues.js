@@ -13,7 +13,7 @@ exports.addIssue = function(req, res){
 					let options = {
 						method: 'POST',
 						uri: `https://api.github.com/repos/joeyklee/itp-tagged-resources/issues?access_token=${user.accessToken}`, //
-						body: {"title": "hello from prototype", "body": "hello there lovely person!"},//JSON.stringify(req.body),
+						body: req.body,
 						json:true,
 						headers: {
 							"User-Agent": `${user.username}`,
