@@ -1,3 +1,5 @@
+# PLEASE IGNORE - NOT READY FOR TESTING YET!
+
 # ITP Resource Collector
 
 A browser plugin/web application that allows you to add tag and add learning materials from across the web 
@@ -51,3 +53,10 @@ curl --header "Content-Type: application/json" \
 - See: https://github.com/sitepoint-editors/OpenAuthWithPassport
 - https://github.com/passport/express-4.x-facebook-example/blob/master/server.js
 - https://stackoverflow.com/questions/25654617/using-the-returned-token-to-access-github-api
+- https://developer.github.com/v3/guides/basics-of-authentication/#registering-your-app
+- https://github.com/jaredhanson/passport-github
+- https://github.com/octokit/rest.js
+- http://fajitanachos.com/Authenticating-with-the-GitHub-API/
+- http://mherman.org/blog/2013/11/10/social-authentication-with-passport-dot-js/#setup
+- https://scotch.io/tutorials/the-easiest-way-to-add-authentication-to-any-app
+
