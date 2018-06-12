@@ -13,9 +13,7 @@ npm install
 
 Terminal window 1: Start nodejs
 ```
-
 npm start
-// or nodemon index.js 
 ```
 
 Terminal window 2: Start mongodb
@@ -24,6 +22,12 @@ If you don't have mongodb installed on your machine go to: [install mongodb with
 ```
 mongod
 ```
+
+Go to:
+```
+http:127.0.0.1:5000
+```
+
 
 ## Workflow
 
