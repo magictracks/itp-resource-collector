@@ -28,6 +28,9 @@ Go to:
 http:127.0.0.1:5000
 ```
 
+See the posts appearing at:
+
+[https://github.com/joeyklee/itp-tagged-resources/issues](https://github.com/joeyklee/itp-tagged-resources/issues)
 
 ## Workflow
 
