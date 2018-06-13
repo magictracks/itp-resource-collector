@@ -9,6 +9,7 @@ function pasteSelection() {
     function(response){
       var text = document.getElementById('textp');
       text.innerHTML = response.data;
+      console.log(response.data);
     });
   });
 }
