@@ -4,7 +4,7 @@
 
 A browser plugin that allows you to save, tag and manage learning materials from across the web 
 
-## Overerview/User flow
+## Overview/User flow
 
 ![](chrome-extension/img/user-flow-project-overview.jpg)
 
