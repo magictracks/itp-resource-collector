@@ -2,7 +2,11 @@
 
 # ITP Resource Collector
 
-A browser plugin/web application that allows you to add tag and add learning materials from across the web 
+A browser plugin that allows you to save, tag and manage learning materials from across the web 
+
+## Overerview/User flow
+
+![](chrome-extension/img/user-flow-project-overview.jpg)
 
 ## Setup
 

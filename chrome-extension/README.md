@@ -12,7 +12,7 @@ drag and drop the folder "save-resources-extension"
 
 ![](img/extensions.jpg)
 
-## Use case
+## Use cases
 
 ### Option 1
 ![](img/option-1.jpg)
