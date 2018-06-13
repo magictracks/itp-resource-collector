@@ -7,6 +7,7 @@ A browser extension that allows you to save, tag and share resources from across
 ```
 open chrome browser
 open new tab and navigate to chrome://extensions
+toggle the "developer mode" toggle button (top-right corner)
 drag and drop the folder "save-resources-extension" 
 ```
 
