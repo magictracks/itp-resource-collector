@@ -75,10 +75,6 @@
 						interactive: true
 					}, function(redirectURL) {
 					  let redirectCode = redirectURL.split('=')[1];
-						  /*
-						  console.log("token/code: ", redirectCode)
-						  https://ehgoogmldniebglgpghnfeoedcjoefch.chromiumapp.org/itp-resource-collector-extension?code=bc98a74131c648eee346
-						  */
 
 						  // Send a POST request
 						  let oauthEndPoint = `https://github.com/login/oauth/access_token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${redirectCode}`
