@@ -108,16 +108,34 @@ $(document).ready(function(){
 		}
 
 		let addListeners = function(){
-			// Check the Log in status
+			// paste selection to form
+			pasteSelection();
+
+			// on button click submit resource
 			$submitResourceBtn.click(postIssue);
 		}
 
+		/**
+		@ Paste selection
+		@ get the selection and paste to form
+		*/
+		function pasteSelection() {
+		  chrome.tabs.query({active:true, windowId: chrome.windows.WINDOW_ID_CURRENT},
+		  function(tab) {
+		  	// console.log(tab)
+		    chrome.tabs.sendMessage(tab[0].id, {method: "getSelection"},
+		    function(response){
+		      var text = document.getElementById('textp');
+		      text.innerHTML = response.data;
+		      console.log(response.data);
+		    });
+		  });
+		}
+
+
 		function postIssue(e){
 			e.preventDefault();
-			// $.get("https://api.github.com/", data => {
-			// 	console.log(data);
-			// })
-
+			// get accessToken from storage and Post to GH Issues
 			chrome.storage.local.get(['accessToken'], function(storageObj){
 				console.log(storageObj);
 				let issuesUrl = `https://api.github.com/repos/joeyklee/itp-tagged-resources/issues?access_token=${storageObj.accessToken}`

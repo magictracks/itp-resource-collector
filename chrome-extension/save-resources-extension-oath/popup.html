@@ -4,7 +4,7 @@
     <script src="jquery.js"></script>
     <script src="popup.js"></script>
     <style>
-      * {padding: 0; margin: 0;}
+      * {padding: 0; margin: 0; box-sizing: border-box;}
       html,body{
         /*background: tomato;*/
         width:400px;
@@ -55,6 +55,24 @@
       .disabled{
         display: none;
       }
+
+      form{
+        width: 100%;
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        padding:10px;
+      }
+      form div{
+        width:100%;
+        height:60px;
+        border:2px solid black;
+      }
+      input{
+      width:100%;
+        margin:0;
+      }
       
 
       
@@ -73,13 +91,14 @@
           <h3>Tag and Share Helpful links!</h3>
           <div>
           <form>
+            <div id="text"><p id="textp"></p></div>
             <input placeholder="Title"> </input>
             <input placeholder="level"> </input>
             <input placeholder="Estimated Time"> </input>
             <input placeholder="Title"> </input>
             <input placeholder="Description"> </input>
             <input placeholder="Tags"> </input>
-            <input type="dropdown" placeholder="Tags"> </input>
+            <input placeholder="Created by"> </input>
             <button id="postIssue">Submit Ressource</button>
           </form>
           </div>

@@ -85,9 +85,11 @@
 
 						    let accessToken = response.data.split('&')[0].split('=')[1];
 						    chrome.storage.local.set({accessToken: accessToken}, function(){
-						    	chrome.storage.local.get(['accessToken'], function(storageObj){
-						    		console.log(storageObj)
-						    	})
+						    	console.log('auth done!')
+						    	// not really needed except for debugging
+						    	// chrome.storage.local.get(['accessToken'], function(storageObj){
+						    	// 	console.log(storageObj)
+						    	// })
 						    });
 						  })
 						  .catch(function (error) {

@@ -29,7 +29,8 @@
     "webNavigation",
     "*://*.google.com/*",
     "storage",
-    "alarms"
+    "alarms",
+    "contextMenus"
   ],
 
   "web_accessible_resources": [
@@ -37,7 +38,7 @@
   ],
 
   "background": {
-    "scripts": ["axios.min.js","eventPage.js"],
+    "scripts": ["axios.min.js","eventPage.js", "background.js"],
     "persistent": false
   }
 }
