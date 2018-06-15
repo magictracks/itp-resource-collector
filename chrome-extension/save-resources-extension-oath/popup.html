@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jquery.js"></script>
+    <script src="popup.js"></script>
+    <style>
+      * {padding: 0; margin: 0;}
+      html,body{
+        /*background: tomato;*/
+        width:400px;
+        height:250px;
+        font-family: Helvetica, sans-serif;
+      }
+
+      [role="button"],
+      button {
+          background-color: #f0f0f0;
+          border: 2px solid black;
+          border-radius: 0px;
+          box-shadow: 2px 2px black;
+          height: 2.5em;
+          line-height: 2.5;
+          margin: 0.25em;
+          padding: 0 1em;
+          width: 14em;
+          font-weight:700;
+          text-align: center;
+      }
+
+
+      .container{
+        width: 100%;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+        border: 4px solid black;
+        box-sizing: border-box;
+      }
+
+      .rcSection{
+        width:100%;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+      }
+
+      #login-container{
+        /*height: 60px;*/
+        justify-content: center;
+      }
+      
+      .disabled{
+        display: none;
+      }
+      
+
+      
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- show when unauthorized -->
+      <div id="login-container" class="rcSection">
+        <!-- <h3>Login to get started!</h3> -->
+        <button id="authBtn" class="">&#8594; login</button>
+      </div>  
+      <!-- show when authorized -->
+      <div id="tagging-container" class="rcSection">
+        <div>
+          <form>
+            <input type="" name="">
+            <input type="" name="">
+            <input type="" name="">
+            <input type="" name="">
+          </form>
+        </div>
+      </div>
+
+      
+      <!-- <div id="text"><p id="textp"></p></div>
+      <input placeholder="Title"> </input>
+      <input placeholder="level"> </input>
+      <input placeholder="Estimated Time"> </input>
+      <input placeholder="Title"> </input>
+      <input placeholder="Description"> </input>
+      <input placeholder="Tags"> </input>
+      <input placeholder="Created by"> </input>
+      <button id="postIssue">Submit Ressource</button> -->
+
+    </div>
+  </body>
+</html>
