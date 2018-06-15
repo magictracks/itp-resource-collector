@@ -1,15 +1,16 @@
 $(document).ready(function(){
 	// $("body").css("background-color", "violet");
 	console.log("body ready!")
-	
+	let $loginContainer, 
+			$taggingContainer, 
+			$authBtn,
+			$submitResourceBtn;
 
 	/**
 	@ LoginProcess
 	@ Handles the login prcess auth
 	*/
 	let LoginProcess = (function(){
-
-		let $loginContainer, $taggingContainer, $authBtn;
 
 		let init = function(){
 			loadElements();
@@ -91,8 +92,62 @@ $(document).ready(function(){
 	})(); // end LoginProcess
 
 
+	/**
+	@
+	@
+	*/
+	let ResourceTagging = (function(){
+
+		let init = function(){
+			loadElements();
+			addListeners();
+		}
+
+		let loadElements = function(){
+			$submitResourceBtn = $("#postIssue")
+		}
+
+		let addListeners = function(){
+			// Check the Log in status
+			$submitResourceBtn.click(postIssue);
+		}
+
+		function postIssue(e){
+			e.preventDefault();
+			// $.get("https://api.github.com/", data => {
+			// 	console.log(data);
+			// })
+
+			chrome.storage.local.get(['accessToken'], function(storageObj){
+				console.log(storageObj);
+				let issuesUrl = `https://api.github.com/repos/joeyklee/itp-tagged-resources/issues?access_token=${storageObj.accessToken}`
+				let output = {"title":"hello from chrome-extension-with-auth", "body": "hello pebble"}
+				$.ajax({
+					type: "POST",
+					headers: {
+		        'Content-Type': 'application/json',
+		      },
+				  url: issuesUrl,
+				  data:JSON.stringify(output),
+				  success: function(data){
+				  	console.log(data)
+				  },
+				  dataType: 'json'
+				});
+			})
+			
+		}
+
+		return {
+			init: init
+		}
+
+	})();
+
+
 	// call functions
 	LoginProcess.init();
+	ResourceTagging.init();
 
 }) 
 
