@@ -153,24 +153,32 @@ $(document).ready(function(){
 				let $title = $("input[name=title]").val();
 				let $formLevel = $("#level").val();
 				let $completionTime = $("#completionTime").val();
-				let $resourceType = $("#resourceType").val();
 				let $formUrl = $("input[name=description]").val();
 				let $formTags = $("input[name=tags]").val();
+
+				let $resourceType = [];
+
+				let $resourceTypeSelected = $("input[type=checkbox]:checked");
+				for(let i = 0; i < $resourceTypeSelected.length; i++){
+					$resourceType.push(`'${$($resourceTypeSelected[i]).val()}'`)
+				} 
 				
 				
 				$formTags = $formTags.split(",");
+				$formTags = $formTags.map( tag => { return `'${tag}'`})
+
 
 				let bodyOutput = `
 	---
 	title: ${$title}
 	level: ${$formLevel}
 	time: ${$completionTime}
-	type: ${$resourceType}
+	type: [${$resourceType.toString()}]
 	tags: [${$formTags.toString()}]
 	mainUrl: '${$topLevelUrl}'
-	description: '${$selectedItems}' 
+	description: '${$selectedItems.trim()}' 
 	---
-				`;
+`;
 				
 				let output = {"title": `${$title}`, "body":bodyOutput}
 				$.ajax({

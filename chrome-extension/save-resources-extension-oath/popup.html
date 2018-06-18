@@ -8,7 +8,7 @@
       html,body{
         /*background: tomato;*/
         width:400px;
-        height:400px;
+        height:500px;
         font-family: Helvetica, sans-serif;
       }
 
@@ -113,6 +113,55 @@
         min-width: 250px;
       }
 
+      fieldset{
+        width:100%;
+        display: flex;
+        flex-direction: row;
+      }
+      fieldset.group  { 
+        margin: 0; 
+        padding: 0; 
+        margin-bottom: 1.25em; 
+        padding: .125em; 
+      } 
+
+      fieldset.group legend { 
+        margin: 0; 
+        padding: 0; 
+        font-weight: bold; 
+        margin-left: 6px; 
+        font-size: 100%; 
+        color: black; 
+      } 
+
+
+      ul.checkbox  { 
+        margin: 0; 
+        padding: 0; 
+        margin-left: 10px; 
+        list-style: none; 
+      } 
+
+      ul.checkbox li input { 
+        margin-right: .25em; 
+      } 
+
+      ul.checkbox li { 
+        border: 1px transparent solid; 
+        display:inline-block;
+        width:6em;
+      } 
+
+      /*ul.checkbox li label { 
+        margin-left: ; 
+      } */
+      /*ul.checkbox li:hover, 
+      ul.checkbox li.focus  { 
+        background-color: lightyellow; 
+        border: 1px gray solid; 
+        width: 12em; 
+      } */
+
       
     </style>
   </head>
@@ -154,7 +203,7 @@
                 <option value="90+">90+ min</option>
               </select>
             </div>
-            <div class="inputRow">
+            <!-- <div class="inputRow">
               <label>Resource Type: </label>
               <select id="resourceType">
                 <option value="unspecified" selected="selected">unspecified</option>
@@ -162,11 +211,17 @@
                 <option value="blog">blog</option>
                 <option value="other">other</option>
               </select>
-            </div>
-            <!-- <div class="inputRow">
-              <label>Description</label>
-              <input type="text" name="description" placeholder="Description"> </input>
             </div> -->
+            <fieldset class="group"> 
+            <legend>Type: select all that apply</legend> 
+            <ul class="checkbox"> 
+              <li><input type="checkbox" id="cb-video" value="video" /><label for="cb-video">Video</label></li> 
+              <li><input type="checkbox" id="cb-blog" value="blog" /><label for="cb-blog">Blog</label></li> 
+              <li><input type="checkbox" id="cb-literature" value="literature" /><label for="cb-literature">Book/Article</label></li>
+              <li><input type="checkbox" id="cb-inspiration" value="inspiration" /><label for="cb-inspiration">Inspiration</label></li> 
+              <li><input type="checkbox" id="cb-other" value="other" /><label for="cb-other">Other</label></li> 
+            </ul> 
+            </fieldset> 
             <div class="inputRow">
               <label>Tags</label>
               <input type="text" name="tags" placeholder="Tags"> </input>  
