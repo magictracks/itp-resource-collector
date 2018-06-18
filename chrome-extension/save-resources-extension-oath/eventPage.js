@@ -16,7 +16,15 @@
 
 		let init = function(){
 			chrome.runtime.onInstalled.addListener(function(){
-				setStatus(0);
+				// setStatus(0);
+
+				// if the status does not exist, set it to 0;
+				chrome.storage.local.get(['status'], function(storageObj){
+					if(storageObj === undefined){
+						setStatus(0);
+					} 
+				})
+
 			})
 		}
 
@@ -55,8 +63,8 @@
 		const CALLBACK_URL = `https://${chrome.runtime.id}.chromiumapp.org/itp-resource-collector-extension`;
 		// should be the client_ID of the app on github
 		// MAKE SURE TO NOT CHECK THIS IN!!!
-		const CLIENT_ID = '';
-		const CLIENT_SECRET = '';
+		const CLIENT_ID = 'ba17caba2815784d32a3';
+		const CLIENT_SECRET = 'bb547b970f86d13e1aad82960d47426353bd1594';
 		const AUTH_URL = `https://github.com/login/oauth/authorize/?client_id=${CLIENT_ID}&redirect_uri=${CALLBACK_URL}&scope=public_repo`;
 
 		let init = function(){
