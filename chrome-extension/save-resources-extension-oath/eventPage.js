@@ -16,7 +16,14 @@
 
 		let init = function(){
 			chrome.runtime.onInstalled.addListener(function(){
-				setStatus(0);
+				chrome.storage.local.get(['status'], function(storageObj){
+					// console.log('intial status is ', storageObj)
+					if(storageObj === undefined){
+						setStatus(0);
+					}
+					
+				})
+				
 			})
 		}
 
