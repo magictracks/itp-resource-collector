@@ -4,7 +4,9 @@ $(document).ready(function(){
 	let $loginContainer, 
 			$taggingContainer, 
 			$authBtn,
-			$submitResourceBtn;
+			$resourceForm,
+			$selectedItems,
+			$topLevelUrl;
 
 	/**
 	@ LoginProcess
@@ -104,7 +106,12 @@ $(document).ready(function(){
 		}
 
 		let loadElements = function(){
-			$submitResourceBtn = $("#postIssue")
+			$resourceForm = $("#resourceForm")
+			
+			// get the top level url
+			chrome.tabs.query({active:true, windowId: chrome.windows.WINDOW_ID_CURRENT}, function (tabs) {
+			 	  $topLevelUrl = tabs[0].url;
+			});
 		}
 
 		let addListeners = function(){
@@ -112,7 +119,7 @@ $(document).ready(function(){
 			pasteSelection();
 
 			// on button click submit resource
-			$submitResourceBtn.click(postIssue);
+			$resourceForm.submit(postIssue);
 		}
 
 		/**
@@ -125,9 +132,9 @@ $(document).ready(function(){
 		  	// console.log(tab)
 		    chrome.tabs.sendMessage(tab[0].id, {method: "getSelection"},
 		    function(response){
-		      var text = document.getElementById('textp');
-		      text.innerHTML = response.data;
 		      console.log(response.data);
+		      $('#textp').val(response.data);
+		      $selectedItems = response.data;
 		    });
 		  });
 		}
@@ -137,9 +144,36 @@ $(document).ready(function(){
 			e.preventDefault();
 			// get accessToken from storage and Post to GH Issues
 			chrome.storage.local.get(['accessToken'], function(storageObj){
-				console.log(storageObj);
+
 				let issuesUrl = `https://api.github.com/repos/joeyklee/itp-tagged-resources/issues?access_token=${storageObj.accessToken}`
-				let output = {"title":"hello from chrome-extension-with-auth", "body": "hello pebble"}
+
+				// TODO: refactor according to structure ... loadElements, addListeners, etc
+				let $title = $("input[name=title]").val();
+				let $formLevel = $("#level").val();
+				let $completionTime = $("#completionTime").val();
+				let $resourceType = $("#resourceType").val();
+				let $formUrl = $("input[name=description]").val();
+				let $formTags = $("input[name=tags]").val();
+				// let $desc = $("#textp").text();
+				
+				
+				
+				$formTags = $formTags.split(",");
+
+				let bodyOutput = `
+	---
+	title: ${$title}
+	level: ${$formLevel}
+	time: ${$completionTime}
+	type: ${$resourceType}
+	tags: [${$formTags.toString()}]
+	mainUrl: '${$topLevelUrl}'
+	description: '${$selectedItems}' 
+	---
+				`
+				//description: '${$desc}' 
+				
+				let output = {"title": `${$title}`, "body":bodyOutput}
 				$.ajax({
 					type: "POST",
 					headers: {
@@ -152,6 +186,8 @@ $(document).ready(function(){
 				  },
 				  dataType: 'json'
 				});
+
+				$("#resourceForm").trigger('reset');
 			})
 			
 		}
