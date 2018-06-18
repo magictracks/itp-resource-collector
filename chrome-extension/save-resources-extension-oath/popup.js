@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	// $("body").css("background-color", "violet");
-	console.log("body ready!")
+
+	console.log("popup ready!")
 	let $loginContainer, 
 			$taggingContainer, 
 			$authBtn,
@@ -127,14 +127,16 @@ $(document).ready(function(){
 		@ get the selection and paste to form
 		*/
 		function pasteSelection() {
-		  chrome.tabs.query({active:true, windowId: chrome.windows.WINDOW_ID_CURRENT},
+		  chrome.tabs.query({
+		  	active:true, 
+		  	windowId: chrome.windows.WINDOW_ID_CURRENT
+		  },
 		  function(tab) {
-		  	// console.log(tab)
 		    chrome.tabs.sendMessage(tab[0].id, {method: "getSelection"},
 		    function(response){
-		      console.log(response.data);
-		      $('#textp').val(response.data);
-		      $selectedItems = response.data;
+		      	console.log("paste selection: ", response);
+		      	$('#textp').val(response.data);
+		      	$selectedItems = response.data;	
 		    });
 		  });
 		}
@@ -154,8 +156,6 @@ $(document).ready(function(){
 				let $resourceType = $("#resourceType").val();
 				let $formUrl = $("input[name=description]").val();
 				let $formTags = $("input[name=tags]").val();
-				// let $desc = $("#textp").text();
-				
 				
 				
 				$formTags = $formTags.split(",");
@@ -170,8 +170,7 @@ $(document).ready(function(){
 	mainUrl: '${$topLevelUrl}'
 	description: '${$selectedItems}' 
 	---
-				`
-				//description: '${$desc}' 
+				`;
 				
 				let output = {"title": `${$title}`, "body":bodyOutput}
 				$.ajax({
