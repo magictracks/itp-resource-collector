@@ -283,3 +283,15 @@ footer {
     align-items: center;
     height: 100%;
 }
+
+
+
+
+/*DEMO*/
+#pageChanger{
+    position: absolute;
+    top:0;
+    right:0;
+    width:300px;
+    height:30px;
+}
