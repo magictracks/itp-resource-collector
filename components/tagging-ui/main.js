@@ -8,7 +8,7 @@ $(document).ready(function() {
         $typeSelect = $("#typeSelect"),
         checkedTypes = [],
         $previewTitle = $(".previewTitle"),
-        $resourcePreviewImage = $(".resourcePreviewImage img"),
+        $resourcePreviewImage = $(".resourcePreviewImage"),
         $previewDesc = $(".previewDesc"),
         $previewUrl = $(".previewUrl"),
         $submitResourceBtn = $("#submitResourceBtn");
@@ -180,7 +180,7 @@ $(document).ready(function() {
               // title
               $previewTitle.html(outputData.previewTitle)
               // image
-              $resourcePreviewImage.attr("src", outputData.previewImageUrl)
+              $resourcePreviewImage.css("background-image", `url(${outputData.previewImageUrl})`)
               // description
               $previewDesc.html(outputData.previewDesc) 
               // url
