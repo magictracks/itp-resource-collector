@@ -176,7 +176,7 @@ $(document).ready(function(){
 	type: [${$resourceType.toString()}]
 	tags: [${$formTags.toString()}]
 	mainUrl: '${$topLevelUrl}'
-	description: '${$selectedItems.trim()}' 
+	description: '${$selectedItems.trim()}'
 	---
 `;
 				
