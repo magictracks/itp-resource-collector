@@ -1,0 +1,19 @@
+{
+  "name": "tagging-server",
+  "version": "0.0.1",
+  "description": "node, express, mongo based rest API for itp-tagged-resources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.7",
+    "mongoose-type-url": "^1.0.4"
+  }
+}
