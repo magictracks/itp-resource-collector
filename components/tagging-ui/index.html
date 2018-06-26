@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tagging UI</title>
+    <meta charset="UTF-8">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.css" />
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+    <div id="App">
+        <!-- header -->
+        <header>
+            <div class="container">
+                <div class="left headerItem">
+                    <p>hello <a href="">USERNAME</a> | <a href="#">logout</a></p>
+                </div>
+                <div class="right headerItem">
+                    <p><a href="#">info</a></p>
+                </div>
+            </div>
+        </header>
+        <!-- main -->
+        <main>
+            <div class="container">
+                <!-- resource preview card -->
+                <section class="mainComponent" id="resourceCard">
+                    <div class="resourcePreview">
+                        <!-- resource image -->
+                        <div class="resourcePreviewImage">
+                            <img src="https://picsum.photos/200/300/?blur">
+                        </div>
+                        <!-- resource info -->
+                        <div class="resourcePreviewInfo">
+                            <!-- title -->
+                            <h4 class="previewTitle previewSection">The title of the page taken from the meta tag of the page</h4>
+                            <!-- meta infos -->
+                            <div class="previewMeta previewSection">
+                                <p href="#" class="previewLevel">Unspecified</p>
+                                <p> | </p>
+                                <p href="#" class="previewTime">Unspecified</p>
+                                <!-- <p> | </p>
+      <p href="#" class="previewRating">Unspecified</p> -->
+                            </div>
+                            <!-- description -->
+                            <div class="previewDesc previewSection">
+                                Soul skate kickturn fakie out nose bump fastplant kick-nose. Pop shove-it lipslide speed wobbles rails hardware dude. Heel flip face plant kickturn street indy grab finger flip. Mongo nollie rocket air full-cab 720 chicken wing.
+                            </div>
+                            <div class="previewTags previewSection">
+                                <p>number of tags: <span class="previewTagCount"></span></p>
+                            </div>
+                            <!-- url -->
+                            <div class="previewSection">&#8618; <a class="previewUrl" href="https://www.youtube.com/watch?v=UI5c1te1MjI">https://www.youtube.com/watch?v=UI5c1te1MjI</a></div>
+                        </div>
+                    </div>
+                </section>
+                <!-- remove or view -->
+                <section class="mainComponent" id="notificationSection">
+                    <div class="star">&#9969;</div>
+                    <div class="notifications">
+                        <div>Saved to <a href="#">itp-tagged-resources</a></div>
+                        <div><a href="#">remove resource</a> | <a href="#">add resource</a></div>
+                    </div>
+                    <div class="star">&#9973;</div>
+                </section>
+                <!-- editing controls -->
+                <section class="mainComponent">
+                    <div id="resourceEditor">
+                        <!-- tagging -->
+                        <div class="editorComponent">
+                            <div class="componentLabel">Tags</div>
+                            <div class="componentFormElement">
+                                <input id="multiSelect" type="text" value="">
+                            </div>
+                        </div>
+                        <!-- type selection -->
+                        <div class="editorComponent">
+                            <div class="componentLabel">Type</div>
+                            <div class="componentFormElement">
+                                <form action="" id="typeSelect">
+                                    <input type="checkbox" name="" value="video">video
+                                    <input type="checkbox" name="" value="blog">blog
+                                    <input type="checkbox" name="" value="inspiration">inspiration
+                                    <input type="checkbox" name="" value="text">text
+                                    <input type="checkbox" name="" value="book">book
+                                    <input type="checkbox" name="" value="other">other
+                                </form>
+                            </div>
+                        </div>
+                        <!-- level -->
+                        <div class="editorComponent">
+                            <div class="componentLabel">Level</div>
+                            <div class="componentFormElement">
+                                <select id="levelSelect">
+                                    <option val="beginner" text="Beginner Friendly">Beginner Friendly</option>
+                                    <option val="beginner-intermediate" text="Beginner - Intermediate">Beginner - Intermediate</option>
+                                    <option val="intermediate" text="Intermediate">Intermediate</option>
+                                    <option val="intermediate-advanced" text="Intermediate - Advanced">Intermediate - Advanced</option>
+                                    <option val="advanced" text="Advanced">Advanced</option>
+                                    <option val="unspecified" text="unspecified" selected>unspecified</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Time -->
+                        <div class="editorComponent">
+                            <div class="componentLabel">Time</div>
+                            <div class="componentFormElement">
+                                <select id="timeSelect">
+                                    <option val="-30" text="less than 30 min">less than 30 min</option>
+                                    <option val="30-60" text="30 min - 1 hr">30 min - 1 hr</option>
+                                    <option val="60-120" text="1 hr - 2 hr">1 hr - 2 hr</option>
+                                    <option val="120+" text="2+ hrs">2+ hrs</option>
+                                    <option val="9999" text="unspecified" selected>unspecified</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- submit -->
+                        <button id="submitResourceBtn">
+                            Submit
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <!-- footer -->
+        <footer>
+            <div class="container">
+                <div class="footerContent"><a href="#">&rarr; view my submissions</a></div>
+            </div>
+        </footer>
+    </div>
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
