@@ -2,7 +2,8 @@ const express = require('express'),
 			app = express(),
 			port = process.env.PORT || 5000,
 			bodyParser = require('body-parser'),
-			mongoose = require("mongoose");
+			mongoose = require("mongoose"),
+			rp = require('request-promise');
 
 // App settings
 app.use(bodyParser.json());
@@ -32,7 +33,57 @@ app.get('/', (req, res) => {
 
 
 
-// TODO: API GET, POST, PUT, Delete endpoints here
+// API endpoints here
+/**
+@ GET: /api/resources
+@ Send all the resources as json
+@*/
+app.get('/api/resources', (req, res, next) => {
+
+	db.Resource.find()
+		.then(function(todos){
+		    res.json(todos);
+		})
+		.catch(function(err){
+		    res.send(err);
+		})
+
+})
+
+/**
+@ POST/PUT: /api/resources
+@ Find a resource based on the url
+@ if it exists, then update it 
+@ if it doesn't exist, then add it
+@*/
+app.post('/api/resources', (req, res, next) => {
+
+	db.Resource.findOneAndUpdate(
+		{"url": req.body.url}, 
+		{
+			$push:{
+				"tags": req.body.tags, 
+				"checkedTypes":req.body.checkedTypes,
+				"levelRating":req.body.levelRating,
+				"timeCommitment":req.body.timeCommitment,
+				"submittedBy":req.body.submittedBy
+			},
+			"desc": req.body.desc,
+			"title": req.body.title,
+			"imageUrl": req.body.imageUrl,
+			"keywordExtraction":req.body.keywordExtraction,
+			"url": req.body.url
+		}, 
+		{upsert:true, new:true})
+	.then(function(updatedResource){
+	    res.json(updatedResource);
+	})
+	.catch(function(err){
+	    res.send(err);
+	})
+	
+});
+
 
 
 

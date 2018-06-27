@@ -13,7 +13,7 @@ const resourceSchema = new mongoose.Schema({
     desc:{
     	type: String,
     	required: true,
-    	unique: true
+    	unique: false
     },
     tags:{
     	type: Array,
