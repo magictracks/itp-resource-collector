@@ -13,8 +13,6 @@ $(document).ready(function() {
         $previewUrl = $(".previewUrl"),
         $submitResourceBtn = $("#submitResourceBtn");
 
-    const $pageChanger = $("#pageChanger");
-
 
     let outputData = {
       title:'',
@@ -29,14 +27,7 @@ $(document).ready(function() {
       keywordExtraction:[]
     }
 
-    /**
-    @ when a new page is selected in the dropdown...
-    @*/
-    $pageChanger.on("change", function(e){
-      // console.log(e.target.value )
-      make(e.target.value);
-    });
-    make($("#pageChanger option:selected").val())
+   
 
     /**
     @ tagging selector
@@ -137,15 +128,8 @@ $(document).ready(function() {
     
 
     function make(tempUrl){
-      // DEMO: get html page from somewhere e.g. youtube and pull meta tags
-      // https://medium.com/@punitweb/pantone-colors-for-designers-515871175cb
-      // https://github.com/joeyklee/itp-diy-syllabus
-      // https://vimeo.com/144704359
-      // TODO: youtube doesn't have meta tags! But it does have keywords
-      // https://www.youtube.com/watch?v=0QjgnEBp__U&t=8s
-      // const tempUrl = 'https://vimeo.com/144704359'
       $.ajax({
-          url: `https://cors-anywhere.herokuapp.com/${tempUrl}`,
+          url: tempUrl,
           success: function(data) {
               let body = $(data)
               let metaTags = [];
@@ -205,5 +189,20 @@ $(document).ready(function() {
 
       });
     } // end make()
+
+
+    // get the windowLocation
+    function getWindowLocation() {
+      chrome.tabs.query({active:true, windowId: chrome.windows.WINDOW_ID_CURRENT},
+      function(tab) {
+        chrome.tabs.sendMessage(tab[0].id, {method: "getWindowLocation"},
+        function(response){
+          console.log(response.data);
+          make(response.data);
+        });
+      });
+    }
+    // call when popup opens:
+    getWindowLocation();
 
 });

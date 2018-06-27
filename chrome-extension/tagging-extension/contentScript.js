@@ -11,4 +11,15 @@
 	//   }
 	// });
 
+	chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+		// Get Selected Text
+	  if (request.method == "getWindowLocation") {
+	  	let url = window.location.href;
+	  	console.log("get location says: ", url);
+	    sendResponse({data: url });
+	  }
+	});
+
+	console.log("window location: ", window.location);
+
 })();
