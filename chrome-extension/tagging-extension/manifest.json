@@ -1,0 +1,37 @@
+{
+  "manifest_version": 2,
+
+  "name": "Tagging Extension",
+  "description": "A browser extension that allows you to save, tag and share resources from across the web.",
+  "version": "1.0",
+
+  "icons": {
+    "128": "icon_128.png"
+  },
+
+  "browser_action": {
+    "default_title": "Selected Text",
+    "default_icon": "icon.png",
+    "default_popup": "index.html"
+  },
+
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "contextMenus"
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "content_scripts":[
+    {
+    "matches": ["<all_urls>"],
+    "js": ["contentScript.js"],
+    "run_at": "document_end",
+    "all_frames": false
+    }
+  ]
+
+}
