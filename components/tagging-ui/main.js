@@ -17,15 +17,15 @@ $(document).ready(function() {
 
 
     let outputData = {
-      previewTitle:'',
-      previewUrl:'',
-      previewDesc:'',
+      title:'',
+      url:'',
+      desc:'',
       tags:[],
       checkedTypes:[],
       levelRating:'',
       timeCommitment:'',
-      previewImageUrl:'',
-      user:'',
+      imageUrl:'',
+      submittedBy:'',
       keywordExtraction:[]
     }
 
@@ -110,6 +110,20 @@ $(document).ready(function() {
     $submitResourceBtn.click(function(e){
       e.preventDefault();
       console.log(outputData);
+        $.ajax({
+          type: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          url: "http://127.0.0.1:5000/api/resources",
+          data: JSON.stringify(outputData),
+          success: function(data){
+            console.log(data)
+          },
+          dataType: 'json'
+        });
+
+        // $.get("http://127.0.0.1:5000/")
     });
 
 
@@ -164,28 +178,28 @@ $(document).ready(function() {
 
               if(metaTags.length > 0){
                 // save to output
-                outputData.previewTitle = metaTags.find(isMetaTitle).content
-                outputData.previewUrl = metaTags.find(isMetaUrl).content
-                outputData.previewDesc = metaTags.find(isMetaDesc).content
-                outputData.previewImageUrl = metaTags.find(isMetaImage).content
+                outputData.title = metaTags.find(isMetaTitle).content
+                outputData.url = metaTags.find(isMetaUrl).content
+                outputData.desc = metaTags.find(isMetaDesc).content
+                outputData.imageUrl = metaTags.find(isMetaImage).content
                 
               } else{
                 console.log("no meta tags to pull from!")
                 // default everything to the requested page url
-                outputData.previewTitle = tempUrl;
-                outputData.previewDesc = tempUrl;
-                outputData.previewImageUrl = 'http://via.placeholder.com/350x350';
-                outputData.previewUrl = tempUrl;
+                outputData.title = tempUrl;
+                outputData.desc = tempUrl;
+                outputData.imageUrl = 'http://via.placeholder.com/350x350';
+                outputData.url = tempUrl;
               }
               // title
-              $previewTitle.html(outputData.previewTitle)
+              $previewTitle.html(outputData.title)
               // image
-              $resourcePreviewImage.css("background-image", `url(${outputData.previewImageUrl})`)
+              $resourcePreviewImage.css("background-image", `url(${outputData.imageUrl})`)
               // description
-              $previewDesc.html(outputData.previewDesc) 
+              $previewDesc.html(outputData.desc) 
               // url
-              $previewUrl.attr("href", outputData.previewUrl)
-              $previewUrl.html(outputData.previewUrl)
+              $previewUrl.attr("href", outputData.url)
+              $previewUrl.html(outputData.url)
               
           }
 
