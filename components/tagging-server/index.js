@@ -3,11 +3,13 @@ const express = require('express'),
 			port = process.env.PORT || 5000,
 			bodyParser = require('body-parser'),
 			mongoose = require("mongoose"),
-			rp = require('request-promise');
+			rp = require('request-promise'),
+			cors = require('cors');
 
 // App settings
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 // Get the db as spec'd in the models directory
 // includes an index which gathers all the schema together
@@ -55,7 +57,12 @@ app.get('/api/resources', (req, res, next) => {
 @ Find a resource based on the url
 @ if it exists, then update it 
 @ if it doesn't exist, then add it
+
+TODO:
+- create k,v pairs from array items
+- increment each unique item
 @*/
+
 app.post('/api/resources', (req, res, next) => {
 
 	db.Resource.findOneAndUpdate(
@@ -81,7 +88,7 @@ app.post('/api/resources', (req, res, next) => {
 	.catch(function(err){
 	    res.send(err);
 	})
-	
+
 });
 
 
