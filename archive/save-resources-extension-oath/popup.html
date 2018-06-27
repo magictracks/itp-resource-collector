@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jquery.js"></script>
+    <script src="popup.js"></script>
+    <style>
+      * {padding: 0; margin: 0; box-sizing: border-box;}
+      html,body{
+        /*background: tomato;*/
+        width:400px;
+        height:500px;
+        font-family: Helvetica, sans-serif;
+      }
+
+      h2{
+        padding:10px 0px 4px 0px;
+      }
+
+      [role="button"],
+      button {
+          background-color: #f0f0f0;
+          border: 2px solid black;
+          border-radius: 0px;
+          box-shadow: 2px 2px black;
+          height: 2.5em;
+          line-height: 2.5;
+          margin: 0.25em;
+          padding: 0 1em;
+          width: 14em;
+          font-weight:700;
+          text-align: center;
+      }
+
+
+      .container{
+        width: 100%;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+        border: 4px solid black;
+        box-sizing: border-box;
+      }
+
+      .rcSection{
+        width:100%;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+      }
+
+      #login-container{
+        /*height: 60px;*/
+        justify-content: center;
+      }
+      
+      .disabled{
+        display: none;
+      }
+
+      form{
+        width: 100%;
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items:flex-start;
+        padding:10px;
+      }
+
+      input{
+        margin:0;
+        min-height:30px;
+        padding:2px;
+        flex-basis:100%;
+        width:100%;
+        min-width: 250px;
+      }
+
+
+      select{
+        flex-basis:100%;
+        margin:0;
+        min-height:30px;
+        min-width: 100%;
+        min-width: 250px;
+      }
+
+      .inputRow{
+        display: flex;
+        flex-direction: row;
+        align-items:center;
+        margin:2px 0px 2px 0px;
+      }
+      
+      label{
+        min-width: 100px;
+      }
+
+      #submitRow{
+        width: 100%;
+        justify-content: center;
+        margin-top:20px;
+
+      }
+
+      #textp{
+        /*overflow-y: visible;*/
+        width: 100%;
+        height:100%;
+        min-height: 100px;
+        min-width: 250px;
+      }
+
+      fieldset{
+        width:100%;
+        display: flex;
+        flex-direction: row;
+      }
+      fieldset.group  { 
+        margin: 0; 
+        padding: 0; 
+        margin-bottom: 1.25em; 
+        padding: .125em; 
+      } 
+
+      fieldset.group legend { 
+        margin: 0; 
+        padding: 0; 
+        font-weight: bold; 
+        margin-left: 6px; 
+        font-size: 100%; 
+        color: black; 
+      } 
+
+
+      ul.checkbox  { 
+        margin: 0; 
+        padding: 0; 
+        margin-left: 10px; 
+        list-style: none; 
+      } 
+
+      ul.checkbox li input { 
+        margin-right: .25em; 
+      } 
+
+      ul.checkbox li { 
+        border: 1px transparent solid; 
+        display:inline-block;
+        width:6em;
+      } 
+
+      /*ul.checkbox li label { 
+        margin-left: ; 
+      } */
+      /*ul.checkbox li:hover, 
+      ul.checkbox li.focus  { 
+        background-color: lightyellow; 
+        border: 1px gray solid; 
+        width: 12em; 
+      } */
+
+      
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- show when unauthorized -->
+      <div id="login-container" class="rcSection">
+        <!-- <h3>Login to get started!</h3> -->
+        <button id="authBtn" class="">&#8594; login</button>
+      </div>  
+      <!-- show when authorized -->
+      <div id="tagging-container" class="rcSection">
+        
+          <h2>Tag and Share Helpful links!</h2>
+          <div>
+          <form id="resourceForm">
+            <div class="inputRow">
+              <label>Title:</label>
+              <input name="title" placeholder="Title"> </input>  
+            </div>
+            <div class="inputRow">
+              <label>Difficulty Level: </label>
+              <select id="level">
+                <option value="unspecified" selected="selected">unspecified</option>
+                <option value="beginner">beginner</option>
+                <option value="beginner-intermediate">beginner - intermediate</option>
+                <option value="intermediate">intermediate</option>
+                <option value="intermediate-advanced">intermediate - advanced</option>
+                <option value="advanced">advanced</option>
+              </select>
+            </div>
+            <div class="inputRow">
+              <label>Completion Time: </label>
+              <select id="completionTime">
+                <option value="unspecified" selected="selected">unspecified</option>
+                <option value="0-30">0 - 30min</option>
+                <option value="30-60">30 - 60min</option>
+                <option value="60-90">60 - 90min</option>
+                <option value="90+">90+ min</option>
+              </select>
+            </div>
+            <!-- <div class="inputRow">
+              <label>Resource Type: </label>
+              <select id="resourceType">
+                <option value="unspecified" selected="selected">unspecified</option>
+                <option value="video">video</option>
+                <option value="blog">blog</option>
+                <option value="other">other</option>
+              </select>
+            </div> -->
+            <fieldset class="group"> 
+            <legend>Type: select all that apply</legend> 
+            <ul class="checkbox"> 
+              <li><input type="checkbox" id="cb-video" value="video" /><label for="cb-video">Video</label></li> 
+              <li><input type="checkbox" id="cb-blog" value="blog" /><label for="cb-blog">Blog</label></li> 
+              <li><input type="checkbox" id="cb-literature" value="literature" /><label for="cb-literature">Book/Article</label></li>
+              <li><input type="checkbox" id="cb-inspiration" value="inspiration" /><label for="cb-inspiration">Inspiration</label></li> 
+              <li><input type="checkbox" id="cb-other" value="other" /><label for="cb-other">Other</label></li> 
+            </ul> 
+            </fieldset> 
+            <div class="inputRow">
+              <label>Tags</label>
+              <input type="text" name="tags" placeholder="Tags"> </input>  
+            </div>
+
+            <!-- <div id="text"> -->
+            <div class="inputRow">
+              <label>Description: </label>
+              <textarea name="resourceSelection" value="" id="textp"></textarea>
+            </div>
+            <!-- </div> -->
+
+            <div class="inputRow" id="submitRow">
+              <button id="postIssue">Submit Resource</button>  
+            </div>
+            
+          </form>
+          </div>
+      </div>
+
+      
+      <!-- <div id="text"><p id="textp"></p></div>
+      <input placeholder="Title"> </input>
+      <input placeholder="level"> </input>
+      <input placeholder="Estimated Time"> </input>
+      <input placeholder="Title"> </input>
+      <input placeholder="Description"> </input>
+      <input placeholder="Tags"> </input>
+      <input placeholder="Created by"> </input>
+      <button id="postIssue">Submit Ressource</button> -->
+
+    </div>
+  </body>
+</html>

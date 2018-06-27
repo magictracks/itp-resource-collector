@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="jquery.js"></script>
+    <script src="popup.js"></script>
+    <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html {}
+
+    body {
+        width: 266px;
+    }
+
+    body:last-child {
+        margin-bottom: 5px;
+    }
+
+    #text {
+        min-height: 50px;
+        width: 254px;
+        margin-left: 5px;
+        margin-top: 5px;
+        border: 1px solid black;
+        overflow: scroll;
+    }
+
+    #textp {
+        padding: 2px;
+    }
+
+    input {
+        width: 250px;
+        margin-left: 5px;
+        margin-top: 5px;
+        resize: none;
+        border: 1px solid black;
+        padding: 2px;
+    }
+
+    button {
+        margin-left: 5px;
+        margin-top: 5px;
+        padding: 5px;
+        border: 1px solid black;
+        cursor: pointer;
+    }
+
+    .hidden {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="text">
+        <p id="textp"></p>
+    </div>
+    <input placeholder="Title"> </input>
+    <input placeholder="level"> </input>
+    <input placeholder="Estimated Time"> </input>
+    <input placeholder="Title"> </input>
+    <input placeholder="Description"> </input>
+    <input placeholder="Tags"> </input>
+    <input placeholder="Created by"> </input>
+    <button id="postIssue">Submit Ressource</button>
+</body>
+
+</html>
