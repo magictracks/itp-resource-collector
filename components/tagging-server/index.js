@@ -70,18 +70,9 @@ function createCounterJson(arr){
 }
 
 
-function incrementProperties(existingFeaturesArray, newFeaturesArray){
-	// increment the counters for the existing data
-
-	// add the new tags 
-
-}
-
-
-
 app.post('/api/resources', (req, res, next) => {
 
-	let incomingResource = Object.req.body;
+	let incomingResource = Object.assign({}, req.body);
 	incomingResource.tags = createCounterJson(incomingResource.tags)
 	incomingResource.checkedTypes = createCounterJson(incomingResource.checkedTypes)
 	incomingResource.levelRating = createCounterJson(incomingResource.levelRating)
@@ -103,7 +94,7 @@ app.post('/api/resources', (req, res, next) => {
 		    			res.send(err);
 		    		})
 		    } else {
-
+		    	// add any unique items
 		    	db.Resource.update(
 			    		{"url": req.body.url},
 			    		{ 
@@ -133,6 +124,8 @@ app.post('/api/resources', (req, res, next) => {
 	    		.catch(err => {
 	    			res.send(err);
 	    		})
+
+	    		
 
 		    }
 		})
