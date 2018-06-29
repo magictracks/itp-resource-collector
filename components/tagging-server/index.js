@@ -43,8 +43,8 @@ app.get('/', (req, res) => {
 app.get('/api/resources', (req, res, next) => {
 
 	db.Resource.find()
-		.then(function(todos){
-		    res.json(todos);
+		.then(function(resources){
+		    res.json(resources);
 		})
 		.catch(function(err){
 		    res.send(err);
@@ -62,32 +62,84 @@ TODO:
 - create k,v pairs from array items
 - increment each unique item
 @*/
+function createCounterJson(arr){
+	const output = arr.map((item) => {
+		return {property: item, count: 1};
+	})
+	return output;
+}
+
+
+function incrementProperties(existingFeaturesArray, newFeaturesArray){
+	// increment the counters for the existing data
+
+	// add the new tags 
+
+}
+
+
 
 app.post('/api/resources', (req, res, next) => {
 
-	db.Resource.findOneAndUpdate(
-		{"url": req.body.url}, 
-		{
-			$push:{
-				"tags": req.body.tags, 
-				"checkedTypes":req.body.checkedTypes,
-				"levelRating":req.body.levelRating,
-				"timeCommitment":req.body.timeCommitment,
-				"submittedBy":req.body.submittedBy
-			},
-			"desc": req.body.desc,
-			"title": req.body.title,
-			"imageUrl": req.body.imageUrl,
-			"keywordExtraction":req.body.keywordExtraction,
-			"url": req.body.url
-		}, 
-		{upsert:true, new:true})
-	.then(function(updatedResource){
-	    res.json(updatedResource);
-	})
-	.catch(function(err){
-	    res.send(err);
-	})
+	let incomingResource = Object.req.body;
+	incomingResource.tags = createCounterJson(incomingResource.tags)
+	incomingResource.checkedTypes = createCounterJson(incomingResource.checkedTypes)
+	incomingResource.levelRating = createCounterJson(incomingResource.levelRating)
+	incomingResource.timeCommitment = createCounterJson(incomingResource.timeCommitment)
+	incomingResource.submittedBy = createCounterJson(incomingResource.submittedBy)
+
+	db.Resource.findOne({"url": req.body.url})
+		.then(function(resource){
+		    console.log(resource)
+		    // if the resource does not exist, make a new one
+		    // else, update the existing one
+		    if(resource === null){
+		    	// create a new document
+		    	db.Resource.create(incomingResource)
+		    		.then(newResource => {
+		    			res.status(201).json(newResource);
+		    		})
+		    		.catch(err => {
+		    			res.send(err);
+		    		})
+		    } else {
+
+		    	db.Resource.update(
+			    		{"url": req.body.url},
+			    		{ 
+			    		 	$addToSet: { 
+			    		 		tags: { 
+			    		 			$each: incomingResource.tags,
+			    		 		},
+			    		 		checkedTypes: { 
+			    		 			$each: incomingResource.checkedTypes,
+			    		 		},
+			    		 		levelRating: { 
+			    		 			$each: incomingResource.levelRating,
+			    		 		},
+			    		 		timeCommitment: { 
+			    		 			$each: incomingResource.timeCommitment,
+			    		 		},
+			    		 		submittedBy: { 
+			    		 			$each: incomingResource.submittedBy,
+			    		 		}
+			    		 	}
+			    		}, {new:true}
+	    		)
+		    	.then(updatedResource => {
+		    		console.log(updatedResource)
+	    			res.status(201).json(updatedResource);
+	    		})
+	    		.catch(err => {
+	    			res.send(err);
+	    		})
+
+		    }
+		})
+		.catch(function(err){
+		    res.send(err);
+		    // console.log("no item found")
+		})
 
 });
 

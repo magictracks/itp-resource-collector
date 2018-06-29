@@ -22,10 +22,10 @@ $(document).ready(function() {
       desc:'',
       tags:[],
       checkedTypes:[],
-      levelRating:'',
-      timeCommitment:'',
+      levelRating:[],
+      timeCommitment:[],
       imageUrl:'',
-      submittedBy:'',
+      submittedBy:[],
       keywordExtraction:[]
     }
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
         onChange: function(value) {
             console.log(value);
 
-            outputData.levelRating = value; // save to output
+            outputData.levelRating.push(value); // save to output
             $previewLevel.html(value);
         }
     });
@@ -86,7 +86,7 @@ $(document).ready(function() {
         onChange: function(value) {
             console.log(value);
 
-            outputData.timeCommitment = value; // save to output
+            outputData.timeCommitment.push(value); // save to output
             $previewTime.html(value);
         }
     });
