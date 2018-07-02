@@ -32,34 +32,46 @@ $(document).ready(function() {
     /**
     @ tagging selector
     @ */
-    $multiSelect.selectize({
-        plugins: ['remove_button'],
-        options: [
+    let taggingSuggestions = [];
+    $.get( "http://127.0.0.1:5000/api/resources/tags", function(data) {
+        console.log(data)
+        taggingSuggestions = data.map(item => {
+          return {"value": item, "text": item}
+        })
+      })
+      .fail(function() {
+        taggingSuggestions = [
             { value: 'javascript', text: 'javascript' },
             { value: 'coding train', text: 'coding train' },
             { value: 'machine learning', text: 'machine learning' },
             { value: 'creative coding', text: 'creative coding' }
-        ],
-        placeholder: "add tags e.g. javascript, concept",
-        delimiter: ',',
-        persist: false,
-        create: function(input) {
-            return {
-                value: input,
-                text: input
+        ];
+      }).always(function() {
+        console.log(taggingSuggestions)
+        $multiSelect.selectize({
+            plugins: ['remove_button'],
+            options: taggingSuggestions,
+            placeholder: "add tags e.g. javascript, concept",
+            delimiter: ',',
+            persist: false,
+            create: function(input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            },
+            onChange: function(value) {
+                console.log(value)
+
+                let count;
+                if (value) count = value.split(",").length;
+                if (!value) count = 0;
+
+                outputData.tags = value.split(","); // save to output
+                $previewTagCount.html(count)
             }
-        },
-        onChange: function(value) {
-            console.log(value)
-
-            let count;
-            if (value) count = value.split(",").length;
-            if (!value) count = 0;
-
-            outputData.tags = value.split(","); // save to output
-            $previewTagCount.html(count)
-        }
-    });
+        });
+      });
 
     /**
     @ level selector
