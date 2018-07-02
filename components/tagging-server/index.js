@@ -69,6 +69,32 @@ function createCounterJson(arr){
 	return output;
 }
 
+/**
+@ compare new and old arrays
+@ increment count for the old items
+@ add the new items
+@ TODO: optimization! lots of looping probably can be avoided
+*/
+function incrementCount(existingArr, newArr){
+	let newProps = newArr.map(item => item.property )
+	let existingProps = existingArr.map(item => item.property )
+
+	let result =[];
+	existingArr.forEach(existingItem => {
+		if(newProps.includes(existingItem.property) === true){
+			existingItem.count++;
+			result.push(existingItem);
+		} else{
+			result.push(existingItem);
+		}
+	})
+	newArr.forEach(newItem => {
+		if(existingProps.includes(newItem.property) !== true){
+			result.push(newItem)
+		}
+	})
+	return result
+}
 
 app.post('/api/resources', (req, res, next) => {
 
@@ -92,31 +118,22 @@ app.post('/api/resources', (req, res, next) => {
 		    		})
 		    		.catch(err => {
 		    			res.send(err);
-		    		})
+		    		});
+
 		    } else {
-		    	// add any unique items
 		    	db.Resource.update(
-			    		{"url": req.body.url},
-			    		{ 
-			    		 	$addToSet: { 
-			    		 		tags: { 
-			    		 			$each: incomingResource.tags,
-			    		 		},
-			    		 		checkedTypes: { 
-			    		 			$each: incomingResource.checkedTypes,
-			    		 		},
-			    		 		levelRating: { 
-			    		 			$each: incomingResource.levelRating,
-			    		 		},
-			    		 		timeCommitment: { 
-			    		 			$each: incomingResource.timeCommitment,
-			    		 		},
-			    		 		submittedBy: { 
-			    		 			$each: incomingResource.submittedBy,
-			    		 		}
-			    		 	}
-			    		}, {new:true}
-	    		)
+		    		{"url": req.body.url},
+		    		{
+		    			$set:{
+		    				"tags": incrementCount(resource.tags, incomingResource.tags),
+		    				"checkedTypes": incrementCount(resource.checkedTypes, incomingResource.checkedTypes),
+		    				"levelRating": incrementCount(resource.levelRating, incomingResource.levelRating),
+		    				"timeCommitment": incrementCount(resource.timeCommitment, incomingResource.timeCommitment),
+		    				"submittedBy": incrementCount(resource.submittedBy, incomingResource.submittedBy)
+		    			}
+		    		},
+		    		{new:true }
+		    	)
 		    	.then(updatedResource => {
 		    		console.log(updatedResource)
 	    			res.status(201).json(updatedResource);
@@ -124,9 +141,6 @@ app.post('/api/resources', (req, res, next) => {
 	    		.catch(err => {
 	    			res.send(err);
 	    		})
-
-	    		
-
 		    }
 		})
 		.catch(function(err){
@@ -135,10 +149,6 @@ app.post('/api/resources', (req, res, next) => {
 		})
 
 });
-
-
-
-
 
 
 
