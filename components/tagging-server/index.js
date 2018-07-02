@@ -53,6 +53,34 @@ app.get('/api/resources', (req, res, next) => {
 })
 
 /**
+@ GET: /api/resources
+@ Send all the resources as json
+@*/
+function uniq(a) {
+   return Array.from(new Set(a));
+}
+
+app.get('/api/resources/tags', (req, res, next) => {
+
+	db.Resource.find()
+		.then(function(resources){
+				let tags = [];
+				resources.forEach(item => {
+					item.tags.forEach(tag => {
+						tags.push(tag.property);
+					})
+				})
+
+				tags = uniq(tags);
+		    res.json(tags);
+		})
+		.catch(function(err){
+		    res.send(err);
+		})
+
+})
+
+/**
 @ POST/PUT: /api/resources
 @ Find a resource based on the url
 @ if it exists, then update it 
