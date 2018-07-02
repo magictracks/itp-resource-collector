@@ -130,6 +130,9 @@ app.post('/api/resources', (req, res, next) => {
 		    				"levelRating": incrementCount(resource.levelRating, incomingResource.levelRating),
 		    				"timeCommitment": incrementCount(resource.timeCommitment, incomingResource.timeCommitment),
 		    				"submittedBy": incrementCount(resource.submittedBy, incomingResource.submittedBy)
+		    			},
+		    			$inc:{
+		    				"submissionCount":1
 		    			}
 		    		},
 		    		{new:true }

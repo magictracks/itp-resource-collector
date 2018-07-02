@@ -49,6 +49,12 @@ const resourceSchema = new mongoose.Schema({
     	type: Array,
     	required: false,
     	unique: false
+    },
+    submissionCount:{
+        type: Number,
+        required: true,
+        unique: false,
+        default:1
     }
 });
 
