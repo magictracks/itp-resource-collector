@@ -55,6 +55,21 @@ const resourceSchema = new mongoose.Schema({
         required: true,
         unique: false,
         default:1
+    },
+    dateSubmitted:{
+        type: Date, 
+        required: true, 
+        default: Date.now
+    },
+    dateUpdated:{
+        type: Date, 
+        required: true, 
+        default: Date.now
+    },
+    dateExpires:{
+        type: Date, 
+        required: true, 
+        default: new Date(Date.now() + 1000*60*60*24*365) // 1 year from creation date
     }
 });
 

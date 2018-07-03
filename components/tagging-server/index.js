@@ -157,7 +157,9 @@ app.post('/api/resources', (req, res, next) => {
 		    				"checkedTypes": incrementCount(resource.checkedTypes, incomingResource.checkedTypes),
 		    				"levelRating": incrementCount(resource.levelRating, incomingResource.levelRating),
 		    				"timeCommitment": incrementCount(resource.timeCommitment, incomingResource.timeCommitment),
-		    				"submittedBy": incrementCount(resource.submittedBy, incomingResource.submittedBy)
+		    				"submittedBy": incrementCount(resource.submittedBy, incomingResource.submittedBy),
+		    				"dateUpdated": Date.now(),
+		    				"dateExpires": Date.now() + 1000*60*60*24*365
 		    			},
 		    			$inc:{
 		    				"submissionCount":1
