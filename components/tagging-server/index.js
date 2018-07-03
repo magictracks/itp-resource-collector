@@ -53,6 +53,26 @@ app.get('/api/resources', (req, res, next) => {
 })
 
 /**
+@ GET: /api/resources/:title
+@ Send resource as json by title
+@*/
+app.get('/api/resources/:id', (req, res, next) => {
+
+	console.log(req.params)
+	db.Resource.findOne(
+		{_id: req.params.id }
+		)
+		.then(function(resource){
+		    res.json(resource);
+		})
+		.catch(function(err){
+		    res.send(err);
+		})
+
+})
+
+
+/**
 @ GET: /api/resources
 @ Send all the resources as json
 @*/
