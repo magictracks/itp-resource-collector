@@ -8,7 +8,8 @@
     "start": "node index.js",
     "start-dev": "nodemon index.js",
     "getCodingTrainVideos": "node scripts/getCodingTrainVideos.js",
-    "getCodingTrainVideoDetails": "node scripts/getCodingTrainVideoDetails.js"
+    "getCodingTrainVideoDetails": "node scripts/getCodingTrainVideoDetails.js",
+    "importCodingTrain2Mongo": "node scripts/importCodingTrain2Mongo.js"
   },
   "author": "",
   "license": "MIT",
