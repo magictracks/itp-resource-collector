@@ -26,9 +26,9 @@ function formatData(video) {
         submittedBy: [],
         keywordExtraction: [],
         submissionCount: 1,
-        dateSubmitted: Date.now(),
-        dateUpdated: Date.now(),
-        dateExpires: Date.now() + 1000 * 60 * 60 * 24 * 365
+        dateSubmitted: new Date(Date.now()),
+        dateUpdated: new Date(Date.now()),
+        dateExpires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365)
     }
 
     d.title = video.items[0].snippet.title
