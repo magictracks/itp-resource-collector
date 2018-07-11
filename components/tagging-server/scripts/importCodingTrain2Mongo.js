@@ -45,6 +45,39 @@ function formatData(video) {
     return d;
 }
 
+
+// function formatData(video) {
+//     let d = {
+//         title: '',
+//         url: '',
+//         desc: '',
+//         tags: [],
+//         checkedTypes: [],
+//         levelRating: [],
+//         timeCommitment: [],
+//         imageUrl: '',
+//         submittedBy: [],
+//         keywordExtraction: []
+//         // submissionCount: 1,
+//         // dateSubmitted: Date.now(),
+//         // dateUpdated: Date.now(),
+//         // dateExpires: Date.now() + 1000 * 60 * 60 * 24 * 365
+//     }
+
+//     d.title = video.items[0].snippet.title
+//     d.desc = video.items[0].snippet.description
+//     d.url = `https://www.youtube.com/watch?v=${video.items[0].id}`
+//     d.tags = video.items[0].snippet.tags
+//     d.checkedTypes.push("video")
+//     // d.checkedTypes = createCounterJson(d.checkedTypes)
+//     // d.levelRating.push()
+//     d.timeCommitment.push(parseDuration(video.items[0].contentDetails.duration))
+//     // d.timeCommitment = createCounterJson(d.timeCommitment)
+//     d.imageUrl = video.items[0].snippet.thumbnails['default'].url
+
+//     return d;
+// }
+
 function createCounterJson(arr) {
     if (arr !== undefined) {
         const output = arr.map((item) => {
@@ -114,7 +147,6 @@ console.log(output.length)
 // 	console.log("written to file!")
 // });
 
-// })
 
 /*@@
 @ Alternatively write to db via file

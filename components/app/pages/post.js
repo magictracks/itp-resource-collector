@@ -21,9 +21,12 @@ const Post = (props) => (
 	       		return(<li>{rating.property}</li>)
 	       	})}
        </h4>
-	      <h4><span>Estimated Time Commitment between : </span>{props.resource.timeCommitment.map(time => {
+	      <h4><span>Estimated Time Commitment between : </span>
+        {
+          props.resource.timeCommitment.map(time => {
 		       		return(<li>{time.property}</li>)
-		       	})}
+		       	})
+        }
 	      </h4>
        <p>
        	<label>tags:</label>
