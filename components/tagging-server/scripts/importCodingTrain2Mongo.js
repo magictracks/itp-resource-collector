@@ -1,10 +1,13 @@
 const fs = require('fs');
+const rp = require('request-promise');
+const Q = require('q')
+const { exec } = require('child_process');
 
 let data = JSON.parse(fs.readFileSync('data/videoDetails.json'));
 
 let output = [];
 
-
+// throw the videos into 
 data.forEach( video => {
 	output.push( formatData(video) )
 })
@@ -58,28 +61,53 @@ function parseDuration(time){
   		return '30 min - 1 hr'
   	}
   }
+}
 
-	// return output
+function post2Mongo(video){
+  let options = {
+  	method: 'POST',
+  	uri: "http://127.0.0.1:5000/api/resources",
+  	body: video,
+  	json: true
+  }
+
+  return rp(options)
+    .then( results => {
+      return results
+    }).catch( err => {
+      return err
+    })
+
 }
 
 
-// console.log(output)
-
-const { exec } = require('child_process');
+Q.all(output.map(video => post2Mongo(video))).then( results => {
+  return results
+}).catch( err =>{
+  console.log(err)
+})
 
 
 fs.writeFile("data/videoDetailsFormatted.json", JSON.stringify(output), (err, data) => {
-
-	exec('mongoimport --db itp-tagged-resources --collection resources data/videoDetailsFormatted.json --jsonArray',(err, stdout, stderr) => {
-  if (err) {
-    console.error(`exec error: ${err}`);
-    return;
-  }
-
-  console.log(`Number of files ${stdout}`);
+	if(err) return err
+	console.log("written to file!")
 });
 
 })
+
+
+// fs.writeFile("data/videoDetailsFormatted.json", JSON.stringify(output), (err, data) => {
+
+// 	exec('mongoimport --drop --db itp-tagged-resources --collection resources data/videoDetailsFormatted.json --jsonArray',(err, stdout, stderr) => {
+//   if (err) {
+//     console.error(`exec error: ${err}`);
+//     return;
+//   }
+
+//   console.log(`Number of files ${stdout}`);
+// });
+
+// })
 
 
 
