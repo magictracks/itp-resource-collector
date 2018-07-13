@@ -104,6 +104,20 @@ $(document).ready(function() {
         outputData.checkedTypes = checkedTypes; // save to output
     });
 
+
+    /**
+    @ title change
+    @ */
+    $previewTitle.on("input", function(e) {
+        outputData.title = e.target.innerText.toString()
+    });
+    /**
+    @ description change
+    @ */
+    $previewDesc.on("input", function(e) {
+        outputData.desc = e.target.innerText.toString()
+    });
+
     /**
     @ submit button
     @ */
@@ -122,8 +136,6 @@ $(document).ready(function() {
           },
           dataType: 'json'
         });
-
-        // $.get("http://127.0.0.1:5000/")
     });
 
 
@@ -186,8 +198,8 @@ $(document).ready(function() {
               } else{
                 console.log("no meta tags to pull from!")
                 // default everything to the requested page url
-                outputData.title = tempUrl;
-                outputData.desc = tempUrl;
+                outputData.title = "give me a fitting title";
+                outputData.desc = "add a description here!";
                 outputData.imageUrl = 'http://via.placeholder.com/350x350';
                 outputData.url = tempUrl;
               }
