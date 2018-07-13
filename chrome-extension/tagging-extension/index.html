@@ -4,11 +4,10 @@
 <head>
     <title>Tagging UI</title>
     <meta charset="UTF-8">
-     <meta name="description" content="">
-     <meta name="keywords" content="">
-     <meta name="author" content="">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="selectize.css" />
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
@@ -21,9 +20,9 @@
                 <div class="left headerItem">
                     <p>hello <a href="">USERNAME</a> | <a href="#">logout</a></p>
                 </div>
-                <div class="right headerItem">
-                    <p><a href="#">info</a></p>
-                </div>
+                <!-- <div class="right headerItem">
+                    <p><a href="#"></a></p>
+                </div> -->
             </div>
         </header>
         <!-- main -->
@@ -38,19 +37,19 @@
                         </div>
                         <!-- resource info -->
                         <div class="resourcePreviewInfo">
+                            <small>Edit Title</small>
                             <!-- title -->
-                            <h4 class="previewTitle previewSection">The title of the page taken from the meta tag of the page</h4>
+                            <h4 class="previewTitle previewSection" contenteditable="true">The title of the page taken from the meta tag of the page</h4>
                             <!-- meta infos -->
                             <div class="previewMeta previewSection">
                                 <p href="#" class="previewLevel">Unspecified</p>
                                 <p> | </p>
                                 <p href="#" class="previewTime">Unspecified</p>
-                                <!-- <p> | </p>
-      <p href="#" class="previewRating">Unspecified</p> -->
                             </div>
                             <!-- description -->
-                            <div class="previewDesc previewSection">
-                                Soul skate kickturn fakie out nose bump fastplant kick-nose. Pop shove-it lipslide speed wobbles rails hardware dude. Heel flip face plant kickturn street indy grab finger flip. Mongo nollie rocket air full-cab 720 chicken wing.
+                            <div class="previewSection">
+                                <small>Edit Description</small>
+                                <p class="previewDesc" contenteditable="true">add a description here!</p>
                             </div>
                             <div class="previewTags previewSection">
                                 <p>number of tags: <span class="previewTagCount"></span></p>
@@ -61,14 +60,13 @@
                     </div>
                 </section>
                 <!-- remove or view -->
-                <section class="mainComponent" id="notificationSection">
+                <!-- <section class="mainComponent" id="notificationSection">
                     <div class="star">&#9969;</div>
                     <div class="notifications">
                         <div>Saved to <a href="#">itp-tagged-resources</a></div>
-                        <div><a href="#">remove resource</a> | <a href="#">add resource</a></div>
                     </div>
                     <div class="star">&#9973;</div>
-                </section>
+                </section> -->
                 <!-- editing controls -->
                 <section class="mainComponent">
                     <div id="resourceEditor">
@@ -77,20 +75,6 @@
                             <div class="componentLabel">Tags</div>
                             <div class="componentFormElement">
                                 <input id="multiSelect" type="text" value="">
-                            </div>
-                        </div>
-                        <!-- type selection -->
-                        <div class="editorComponent">
-                            <div class="componentLabel">Type</div>
-                            <div class="componentFormElement">
-                                <form action="" id="typeSelect">
-                                    <input type="checkbox" name="" value="video">video
-                                    <input type="checkbox" name="" value="blog">blog
-                                    <input type="checkbox" name="" value="inspiration">inspiration
-                                    <input type="checkbox" name="" value="text">text
-                                    <input type="checkbox" name="" value="book">book
-                                    <input type="checkbox" name="" value="other">other
-                                </form>
                             </div>
                         </div>
                         <!-- level -->
@@ -120,6 +104,21 @@
                                 </select>
                             </div>
                         </div>
+                        <!-- type selection -->
+                        <div class="editorComponent">
+                            <div class="componentLabel">Type</div>
+                            <div class="componentFormElement">
+                                <form action="" id="typeSelect">
+                                    <input type="checkbox" name="" value="video">video
+                                    <input type="checkbox" name="" value="blog">blog
+                                    <input type="checkbox" name="" value="inspiration">inspiration
+                                    <input type="checkbox" name="" value="text">text
+                                    <input type="checkbox" name="" value="book">book <br>
+                                    <input type="checkbox" name="" value="syllabus">syllabus
+                                    <input type="checkbox" name="" value="other">other
+                                </form>
+                            </div>
+                        </div>
                         <!-- submit -->
                         <button id="submitResourceBtn">
                             Submit
@@ -135,7 +134,6 @@
             </div>
         </footer>
     </div>
-
     <!-- DEMO selector -->
     <!-- <select id="pageChanger">
         <option value="https://medium.com/@punitweb/pantone-colors-for-designers-515871175cb" selected>https://medium.com/@punitweb/pantone-colors-for-designers-515871175cb</option>

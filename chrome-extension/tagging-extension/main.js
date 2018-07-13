@@ -33,7 +33,7 @@ $(document).ready(function() {
     @ tagging selector
     @ */
     let taggingSuggestions = [];
-    $.get( "http://127.0.0.1:5000/api/resources/tags", function(data) {
+    $.get( "http://127.0.0.1:5000/api/tags", function(data) {
         console.log(data)
         taggingSuggestions = data.map(item => {
           return {"value": item, "text": item}
@@ -107,6 +107,19 @@ $(document).ready(function() {
         })
 
         outputData.checkedTypes = checkedTypes; // save to output
+    });
+
+    /**
+    @ title change
+    @ */
+    $previewTitle.on("input", function(e) {
+        outputData.title = e.target.innerText.toString()
+    });
+    /**
+    @ description change
+    @ */
+    $previewDesc.on("input", function(e) {
+        outputData.desc = e.target.innerText.toString()
     });
 
     /**

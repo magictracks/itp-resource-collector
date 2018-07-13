@@ -80,17 +80,17 @@ function uniq(a) {
    return Array.from(new Set(a));
 }
 
-app.get('/api/resources/tags', (req, res, next) => {
+app.get('/api/tags/', (req, res, next) => {
 
 	db.Resource.find()
 		.then(function(resources){
 				let tags = [];
+
 				resources.forEach(item => {
 					item.tags.forEach(tag => {
 						tags.push(tag.property);
 					})
 				})
-
 				tags = uniq(tags);
 		    res.json(tags);
 		})
