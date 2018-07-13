@@ -34,7 +34,6 @@ $(document).ready(function() {
     @ */
     let taggingSuggestions = [];
     $.get( "http://127.0.0.1:5000/api/tags", function(data) {
-        console.log(data)
         taggingSuggestions = data.map(item => {
           return {"value": item, "text": item}
         })
@@ -47,7 +46,6 @@ $(document).ready(function() {
             { value: 'creative coding', text: 'creative coding' }
         ];
       }).always(function() {
-        console.log(taggingSuggestions)
         $multiSelect.selectize({
             plugins: ['remove_button'],
             options: taggingSuggestions,
@@ -186,6 +184,8 @@ $(document).ready(function() {
               function isMetaSiteName(meta){
                 return meta.property === "og:site_name";
               }
+
+              console.log("HEY!", body )
 
               if(metaTags.length > 0){
                 // save to output

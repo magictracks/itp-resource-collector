@@ -104,8 +104,12 @@ main .mainComponent {
 }
 
 h4[contenteditable]{
-    max-height: 60px;
+    border: 1px solid #57068C;
+    max-height: 48px;
+    height:60px;
     overflow: auto;
+    max-width:200px;
+    width: 200px;
 }
 
 p[contenteditable]{
@@ -118,8 +122,8 @@ p[contenteditable]{
 
 #resourceCard {
     width: 100%;
-    height:200px;
-    max-height: 200px;
+    height:240px;
+    max-height: 240px;
     margin-bottom:6px;
 }
 
