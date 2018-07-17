@@ -7,11 +7,3 @@ A browser plugin that allows you to save, tag and manage learning materials from
 See: [chrome-extension](/chrome-extension)
 
 * currently a prototype to show resource tagging via a browser extension
-
-## server
-
-See: [server](/server) 
-
-* currently a prototype to show authentication and submission process
-
-

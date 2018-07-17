@@ -16,7 +16,7 @@ if you don't have mongodb, then install it via the [docs](https://docs.mongodb.c
 
 Next, you're going to navigate to the tagging server directory:
 ```
-cd itp-resource-collector/components/tagging-server
+cd itp-resource-collector-api
 npm install
 npm start
 ```
@@ -28,15 +28,4 @@ open new tab and navigate to chrome://extensions
 toggle the "developer mode" toggle button (top-right corner)
 drag and drop the folder "tagging-extension" 
 ```
-
-![](img/extensions.jpg)
-
-## Use cases
-
-### Option 1
-![](img/option-1.jpg)
-
-### Option 2
-![](img/option-2.jpg)
-
 
