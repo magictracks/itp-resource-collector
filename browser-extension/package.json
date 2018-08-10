@@ -1,0 +1,16 @@
+{
+  "name": "browser-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "watchify components/index.js -o bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "choo": "^6.13.0",
+    "choo-devtools": "^2.5.1"
+  }
+}
