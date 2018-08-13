@@ -58,7 +58,7 @@ class ImageSelection extends Component {
 
     let sel = e.target.src;
     console.log("select image",sel)
-    this.emit("newResourceStore:addImage", sel)
+    this.emit("pageStore:addImage", sel)
   }
 
   createElement() {

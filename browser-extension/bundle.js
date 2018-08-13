@@ -3906,7 +3906,7 @@ class ImageSelection extends Component {
 
     let sel = e.target.src;
     console.log("select image",sel)
-    this.emit("newResourceStore:addImage", sel)
+    this.emit("pageStore:addImage", sel)
   }
 
   createElement() {
@@ -4040,7 +4040,7 @@ var choo = require('choo')
 /* stores */
 var countStore = require('./stores/countStore')
 var pageStore = require('./stores/pageStore')
-var newResourceStore = require('./stores/newResourceStore')
+// var newResourceStore = require('./stores/newResourceStore')
 
 var tagView = require('./views/tag')
 var selectImageView = require('./views/selectImage')
@@ -4050,7 +4050,7 @@ var app = choo()
 app.use(devtools())
 app.use(countStore)
 app.use(pageStore)
-app.use(newResourceStore)
+// app.use(newResourceStore)
 
 app.route('/*', selectImageView)
 app.route('/tag', tagView)
@@ -4059,7 +4059,7 @@ let tree = app.start();
 console.log(tree)
 document.querySelector("#App").appendChild(tree);
 
-},{"./stores/countStore":68,"./stores/newResourceStore":69,"./stores/pageStore":70,"./views/selectImage":71,"./views/tag":72,"choo":27,"choo-devtools":15,"choo/html":26}],15:[function(require,module,exports){
+},{"./stores/countStore":68,"./stores/pageStore":69,"./views/selectImage":70,"./views/tag":71,"choo":27,"choo-devtools":15,"choo/html":26}],15:[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter
 var window = require('global/window')
 
@@ -7901,31 +7901,18 @@ function countStore(state, emitter) {
 module.exports = countStore;
 
 },{}],69:[function(require,module,exports){
-function newResourceStore(state, emitter) {
+function pageStore(state, emitter) {
+  state.page = {
+    markup: "",
+    imageLinks: []
+  }
+
   state.newResource = {
     headerImageUrl:"",
     title:"",
     description:"",
     url:"",
     tags:""
-  }
-
-  emitter.on('DOMContentLoaded', function() {
-    emitter.on('newResourceStore:addImage', function(imageUrl) {
-      // state.test.count += count
-      state.newResource.headerImageUrl = imageUrl
-      emitter.emit(state.events.RENDER)
-    })
-  });
-}
-
-module.exports = newResourceStore;
-
-},{}],70:[function(require,module,exports){
-function pageStore(state, emitter) {
-  state.page = {
-    markup: "",
-    imageLinks: []
   }
 
   emitter.on('DOMContentLoaded', function() {
@@ -7944,13 +7931,30 @@ function pageStore(state, emitter) {
         state.page.imageLinks.push(img.src)
       })
 
+      // get images
+      // get title
+      // get description
+      // get url
       metas.forEach(info => {
         if (info.getAttribute("property") == "og:image") {
           state.page.imageLinks.push(info.getAttribute("content"))
-          console.log(state.page.imageLinks.length)
+        } else if (info.getAttribute("property") == "og:title"){
+          state.newResource.title = info.getAttribute("content")
+        } else if (info.getAttribute("property") == "og:url"){
+          state.newResource.url = info.getAttribute("content")
+        }else if (info.getAttribute("property") == "og:description"){
+          state.newResource.description = info.getAttribute("content")
         }
       })
 
+      emitter.emit(state.events.RENDER)
+    })
+
+
+
+    emitter.on('pageStore:addImage', function(imageUrl) {
+      // state.test.count += count
+      state.newResource.headerImageUrl = imageUrl
       emitter.emit(state.events.RENDER)
     })
   });
@@ -7958,7 +7962,7 @@ function pageStore(state, emitter) {
 
 module.exports = pageStore;
 
-},{}],71:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 var html = require('choo/html')
 var choo = require('choo')
 
@@ -7977,7 +7981,7 @@ function selectImageView(state, emit) {
 
 module.exports = selectImageView;
 
-},{"../components/ImageSelection":11,"../components/NavBar":12,"choo":27,"choo/html":26}],72:[function(require,module,exports){
+},{"../components/ImageSelection":11,"../components/NavBar":12,"choo":27,"choo/html":26}],71:[function(require,module,exports){
 var html = require('choo/html')
 var choo = require('choo')
 
