@@ -3848,6 +3848,12 @@ var html = require('choo/html')
 var devtools = require('choo-devtools')
 var choo = require('choo')
 
+/* stores */
+var countStore = require('./stores/countStore')
+
+var mainView = require('./views/main')
+
+
 var app = choo()
 app.use(devtools())
 app.use(countStore)
@@ -3857,27 +3863,25 @@ let tree = app.start();
 console.log(tree)
 document.querySelector("#App").appendChild(tree);
 
-function mainView (state, emit) {
-  return html`
-    <div>
-      <h1>count is ${state.count}</h1>
-      <button onclick=${onclick}>Increment</button>
-    </div>
-  `
 
-  function onclick () {
-    emit('increment', 1)
-  }
-}
+// // get the windowLocation
+// function getWindowLocation() {
+//   chrome.tabs.query({
+//       active: true,
+//       windowId: chrome.windows.WINDOW_ID_CURRENT
+//     },
+//     function(tab) {
+//       chrome.tabs.sendMessage(tab[0].id, {
+//           method: "getWindowLocation"
+//         },
+//         function(response) {
+//           console.log(response);
+//           // make(response.data);
+//         });
+//     });
+// }
 
-function countStore (state, emitter) {
-  state.count = 0
-  emitter.on('increment', function (count) {
-    state.count += count
-    emitter.emit('render')
-  })
-}
-},{"choo":22,"choo-devtools":11,"choo/html":21}],11:[function(require,module,exports){
+},{"./stores/countStore":60,"./views/main":61,"choo":22,"choo-devtools":11,"choo/html":21}],11:[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter
 var window = require('global/window')
 
@@ -7417,4 +7421,35 @@ function extend(target) {
     return target
 }
 
-},{}]},{},[10]);
+},{}],60:[function(require,module,exports){
+function countStore(state, emitter) {
+  state.count = 0
+  emitter.on('increment', function(count) {
+    state.count += count
+    emitter.emit('render')
+  })
+}
+
+module.exports = countStore;
+
+},{}],61:[function(require,module,exports){
+var html = require('choo/html')
+var choo = require('choo')
+
+function mainView(state, emit) {
+  return html `
+    <div>
+      <h1>count is ${state.count}</h1>
+      <button onclick=${onclick}>Increment</button>
+    </div>
+  `
+
+  function onclick() {
+    // call when popup opens:
+    emit('increment', 1)
+  }
+}
+
+module.exports = mainView;
+
+},{"choo":22,"choo/html":21}]},{},[10]);
