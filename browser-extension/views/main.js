@@ -1,18 +1,16 @@
 var html = require('choo/html')
 var choo = require('choo')
 
+var countBtn = require("../components/countBtn")
+
+
 function mainView(state, emit) {
+
   return html `
     <div>
-      <h1>count is ${state.count}</h1>
-      <button onclick=${onclick}>Increment</button>
+      ${this.state.cache(countBtn, "countBtn").render()}
     </div>
   `
-
-  function onclick() {
-    // call when popup opens:
-    emit('increment', 1)
-  }
 }
 
 module.exports = mainView;
