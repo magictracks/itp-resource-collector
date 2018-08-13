@@ -10,6 +10,7 @@ class ImageSelection extends Component {
     this.emit = emit;
 
     this.test = this.test.bind(this);
+    this.selectImage = this.selectImage.bind(this);
     this.local = this.state.components[name] = {}
 
     this.getImages();
@@ -40,10 +41,24 @@ class ImageSelection extends Component {
     console.log("hello")
   }
 
+
+  selectImage(e){
+    e.preventDefault();
+
+    let sel = e.target.src;
+    console.log("select image",sel)
+
+    this.emit("newResourceStore:addImage", sel)
+  }
+
   createElement() {
     return html `
     <div>
-      ${this.state.page.imageLinks.map( (imgLink) => html`<img src=${imgLink} />`) }
+      <h2>Select a cover image</h2>
+      ${this.state.page.imageLinks.map( (imgLink) => html`
+        <div>
+          <img alt="" src=${imgLink} onclick=${this.selectImage} />
+      </div>`) }
     </div>
     `
   }

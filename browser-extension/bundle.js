@@ -3858,16 +3858,11 @@ class ImageSelection extends Component {
     this.emit = emit;
 
     this.test = this.test.bind(this);
+    this.selectImage = this.selectImage.bind(this);
     this.local = this.state.components[name] = {}
-
-    this.getImages = this.getImages.bind(this);
 
     this.getImages();
   }
-
-  // setState(){
-  //
-  // }
 
   getImages(){
     chrome.tabs.query({
@@ -3894,10 +3889,24 @@ class ImageSelection extends Component {
     console.log("hello")
   }
 
+
+  selectImage(e){
+    e.preventDefault();
+
+    let sel = e.target.src;
+    console.log("select image",sel)
+
+    this.emit("newResourceStore:addImage", sel)
+  }
+
   createElement() {
     return html `
     <div>
-      ${this.state.page.imageLinks.map( (imgLink) => html`<img src=${imgLink} />`) }
+      <h2>Select a cover image</h2>
+      ${this.state.page.imageLinks.map( (imgLink) => html`
+        <div>
+          <img alt="" src=${imgLink} onclick=${this.selectImage} />
+      </div>`) }
     </div>
     `
   }
@@ -3907,7 +3916,73 @@ class ImageSelection extends Component {
 
 module.exports = ImageSelection;
 
-},{"choo/component":24,"choo/html":25}],12:[function(require,module,exports){
+},{"choo/component":25,"choo/html":26}],12:[function(require,module,exports){
+var Component = require('choo/component')
+var html = require('choo/html')
+  // your store comes from index :)
+
+class NavBar extends Component {
+  constructor(name, state, emit) {
+    super(name);
+
+    this.state = state;
+    this.emit = emit;
+
+    this.style = `
+      *{
+        box-sizing: border-box;
+      }
+      nav{
+          width:100%;
+          height:60px;
+          display:flex;
+          flex-direction:column;
+          padding:10px;
+      }
+      ul{
+        list-style:none;
+        margin:0px;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        border: 2px solid black;
+      }
+      li{
+        list-style:none;
+        margin-right: 10px;
+      }
+    `
+
+  }
+
+  update() {
+    return false
+  }
+
+
+  createElement() {
+    return html `
+      <nav>
+        <style>
+          ${this.style}
+        </style>
+        <ul>
+          <li><a href="/">Select Image</a></li>
+          <li>${">"}</li>
+          <li><a href="/tag">Add Info</a></li>
+          <li>${">"}</li>
+          <li><a href="/organize">Organize</a></li>
+        </ul>
+      </nav>
+    `
+  }
+}
+
+
+
+module.exports = NavBar;
+
+},{"choo/component":25,"choo/html":26}],13:[function(require,module,exports){
 var Component = require('choo/component')
 var html = require('choo/html')
   // your store comes from index :)
@@ -3944,7 +4019,7 @@ class CountBtn extends Component {
 
 module.exports = CountBtn;
 
-},{"choo/component":24,"choo/html":25}],13:[function(require,module,exports){
+},{"choo/component":25,"choo/html":26}],14:[function(require,module,exports){
 var html = require('choo/html')
 var devtools = require('choo-devtools')
 var choo = require('choo')
@@ -3952,21 +4027,26 @@ var choo = require('choo')
 /* stores */
 var countStore = require('./stores/countStore')
 var pageStore = require('./stores/pageStore')
+var newResourceStore = require('./stores/newResourceStore')
 
-var mainView = require('./views/main')
+var tagView = require('./views/tag')
+var selectImageView = require('./views/selectImage')
+
 
 var app = choo()
 app.use(devtools())
 app.use(countStore)
 app.use(pageStore)
+app.use(newResourceStore)
 
-app.route('/*', mainView)
+app.route('/*', selectImageView)
+app.route('/tag', tagView)
 let tree = app.start();
 
 console.log(tree)
 document.querySelector("#App").appendChild(tree);
 
-},{"./stores/countStore":67,"./stores/pageStore":68,"./views/main":69,"choo":26,"choo-devtools":14,"choo/html":25}],14:[function(require,module,exports){
+},{"./stores/countStore":68,"./stores/newResourceStore":69,"./stores/pageStore":70,"./views/selectImage":71,"./views/tag":72,"choo":27,"choo-devtools":15,"choo/html":26}],15:[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter
 var window = require('global/window')
 
@@ -4019,7 +4099,7 @@ function expose (opts) {
   }
 }
 
-},{"./lib/copy":15,"./lib/debug":16,"./lib/help":17,"./lib/log":18,"./lib/logger":19,"./lib/perf":20,"./lib/storage":21,"events":8,"global/window":32,"wayfarer/get-all-routes":62}],15:[function(require,module,exports){
+},{"./lib/copy":16,"./lib/debug":17,"./lib/help":18,"./lib/log":19,"./lib/logger":20,"./lib/perf":21,"./lib/storage":22,"events":8,"global/window":33,"wayfarer/get-all-routes":63}],16:[function(require,module,exports){
 var stateCopy = require('state-copy')
 var pluck = require('plucker')
 
@@ -4035,7 +4115,7 @@ function copy (state) {
   stateCopy(isStateString ? pluck.apply(this, arguments) : state)
 }
 
-},{"plucker":57,"state-copy":61}],16:[function(require,module,exports){
+},{"plucker":58,"state-copy":62}],17:[function(require,module,exports){
 var onChange = require('object-change-callsite')
 var nanologger = require('nanologger')
 var assert = require('assert')
@@ -4076,7 +4156,7 @@ function debug (state, emitter, app, localEmitter) {
   })
 }
 
-},{"assert":1,"nanologger":44,"object-change-callsite":54}],17:[function(require,module,exports){
+},{"assert":1,"nanologger":45,"object-change-callsite":55}],18:[function(require,module,exports){
 module.exports = help
 
 function help () {
@@ -4109,7 +4189,7 @@ function print (cmd, desc) {
 
 function noop () {}
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var removeItems = require('remove-array-items')
 var scheduler = require('nanoscheduler')()
 var nanologger = require('nanologger')
@@ -4187,7 +4267,7 @@ function log (state, emitter, app, localEmitter) {
 
 function noop () {}
 
-},{"clone":27,"nanologger":44,"nanoscheduler":52,"remove-array-items":59}],19:[function(require,module,exports){
+},{"clone":28,"nanologger":45,"nanoscheduler":53,"remove-array-items":60}],20:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var nanologger = require('nanologger')
 var Hooks = require('choo-hooks')
@@ -4276,7 +4356,7 @@ function logger (state, emitter, opts) {
   }
 }
 
-},{"choo-hooks":22,"nanologger":44,"nanoscheduler":52}],20:[function(require,module,exports){
+},{"choo-hooks":23,"nanologger":45,"nanoscheduler":53}],21:[function(require,module,exports){
 var onPerformance = require('on-performance')
 
 var BAR = '█'
@@ -4417,7 +4497,7 @@ function getMedian (args) {
 // Do nothing.
 function noop () {}
 
-},{"on-performance":56}],21:[function(require,module,exports){
+},{"on-performance":57}],22:[function(require,module,exports){
 var pretty = require('prettier-bytes')
 
 module.exports = storage
@@ -4460,7 +4540,7 @@ function fmt (num) {
 
 function noop () {}
 
-},{"prettier-bytes":58}],22:[function(require,module,exports){
+},{"prettier-bytes":59}],23:[function(require,module,exports){
 var onPerformance = require('on-performance')
 var scheduler = require('nanoscheduler')()
 var assert = require('assert')
@@ -4605,7 +4685,7 @@ function sumDurations (timings) {
   }, 0).toFixed()
 }
 
-},{"assert":1,"nanoscheduler":52,"on-performance":56}],23:[function(require,module,exports){
+},{"assert":1,"nanoscheduler":53,"on-performance":57}],24:[function(require,module,exports){
 var assert = require('assert')
 var LRU = require('nanolru')
 
@@ -4648,13 +4728,13 @@ function newCall (Cls) {
   return new (Cls.bind.apply(Cls, arguments)) // eslint-disable-line
 }
 
-},{"assert":35,"nanolru":45}],24:[function(require,module,exports){
+},{"assert":36,"nanolru":46}],25:[function(require,module,exports){
 module.exports = require('nanocomponent')
 
-},{"nanocomponent":37}],25:[function(require,module,exports){
+},{"nanocomponent":38}],26:[function(require,module,exports){
 module.exports = require('nanohtml')
 
-},{"nanohtml":41}],26:[function(require,module,exports){
+},{"nanohtml":42}],27:[function(require,module,exports){
 var scrollToAnchor = require('scroll-to-anchor')
 var documentReady = require('document-ready')
 var nanotiming = require('nanotiming')
@@ -4927,7 +5007,7 @@ Choo.prototype._setCache = function (state) {
   }
 }
 
-},{"./component/cache":23,"assert":35,"document-ready":29,"nanobus":36,"nanohref":38,"nanomorph":46,"nanoquery":49,"nanoraf":50,"nanorouter":51,"nanotiming":53,"scroll-to-anchor":60,"xtend":65}],27:[function(require,module,exports){
+},{"./component/cache":24,"assert":36,"document-ready":30,"nanobus":37,"nanohref":39,"nanomorph":47,"nanoquery":50,"nanoraf":51,"nanorouter":52,"nanotiming":54,"scroll-to-anchor":61,"xtend":66}],28:[function(require,module,exports){
 (function (Buffer){
 var clone = (function() {
 'use strict';
@@ -5188,7 +5268,7 @@ if (typeof module === 'object' && module.exports) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":7}],28:[function(require,module,exports){
+},{"buffer":7}],29:[function(require,module,exports){
 'use strict';
 module.exports = input => {
 	const el = document.createElement('textarea');
@@ -5231,7 +5311,7 @@ module.exports = input => {
 	return success;
 };
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict'
 
 var assert = require('assert')
@@ -5250,7 +5330,7 @@ function ready (callback) {
   })
 }
 
-},{"assert":1}],30:[function(require,module,exports){
+},{"assert":1}],31:[function(require,module,exports){
 module.exports = stringify
 stringify.default = stringify
 function stringify (obj) {
@@ -5296,7 +5376,7 @@ function decirc (val, k, stack, parent) {
   }
 }
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (global){
 var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
@@ -5317,7 +5397,7 @@ if (typeof document !== 'undefined') {
 module.exports = doccy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"min-document":6}],32:[function(require,module,exports){
+},{"min-document":6}],33:[function(require,module,exports){
 (function (global){
 var win;
 
@@ -5334,7 +5414,7 @@ if (typeof window !== "undefined") {
 module.exports = win;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 module.exports = attributeToProperty
 
 var transform = {
@@ -5355,7 +5435,7 @@ function attributeToProperty (h) {
   }
 }
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var attrToProp = require('hyperscript-attribute-to-property')
 
 var VAR = 0, TEXT = 1, OPEN = 2, CLOSE = 3, ATTR = 4
@@ -5651,7 +5731,7 @@ var closeRE = RegExp('^(' + [
 ].join('|') + ')(?:[\.#][a-zA-Z0-9\u007F-\uFFFF_:-]+)*$')
 function selfClosing (tag) { return closeRE.test(tag) }
 
-},{"hyperscript-attribute-to-property":33}],35:[function(require,module,exports){
+},{"hyperscript-attribute-to-property":34}],36:[function(require,module,exports){
 assert.notEqual = notEqual
 assert.notOk = notOk
 assert.equal = equal
@@ -5675,7 +5755,7 @@ function assert (t, m) {
   if (!t) throw new Error(m || 'AssertionError')
 }
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var splice = require('remove-array-items')
 var nanotiming = require('nanotiming')
 var assert = require('assert')
@@ -5839,7 +5919,7 @@ Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
   }
 }
 
-},{"assert":1,"nanotiming":53,"remove-array-items":59}],37:[function(require,module,exports){
+},{"assert":1,"nanotiming":54,"remove-array-items":60}],38:[function(require,module,exports){
 var document = require('global/document')
 var nanotiming = require('nanotiming')
 var morph = require('nanomorph')
@@ -5995,7 +6075,7 @@ Nanocomponent.prototype.update = function () {
   throw new Error('nanocomponent: update should be implemented!')
 }
 
-},{"assert":35,"global/document":31,"nanomorph":46,"nanotiming":53,"on-load":55}],38:[function(require,module,exports){
+},{"assert":36,"global/document":32,"nanomorph":47,"nanotiming":54,"on-load":56}],39:[function(require,module,exports){
 var assert = require('assert')
 
 var safeExternalLink = /(noopener|noreferrer) (noopener|noreferrer)/
@@ -6039,7 +6119,7 @@ function href (cb, root) {
   })
 }
 
-},{"assert":35}],39:[function(require,module,exports){
+},{"assert":36}],40:[function(require,module,exports){
 var trailingNewlineRegex = /\n[\s]+$/
 var leadingNewlineRegex = /^\n[\s]+/
 var trailingSpaceRegex = /[\s]+$/
@@ -6172,13 +6252,13 @@ module.exports = function appendChild (el, childs) {
   }
 }
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 module.exports = [
   'autofocus', 'checked', 'defaultchecked', 'disabled', 'formnovalidate',
   'indeterminate', 'readonly', 'required', 'selected', 'willvalidate'
 ]
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var hyperx = require('hyperx')
 var appendChild = require('./append-child')
 var SVG_TAGS = require('./svg-tags')
@@ -6261,12 +6341,12 @@ module.exports = hyperx(nanoHtmlCreateElement, {comments: true})
 module.exports.default = module.exports
 module.exports.createElement = nanoHtmlCreateElement
 
-},{"./append-child":39,"./bool-props":40,"./direct-props":42,"./svg-tags":43,"hyperx":34}],42:[function(require,module,exports){
+},{"./append-child":40,"./bool-props":41,"./direct-props":43,"./svg-tags":44,"hyperx":35}],43:[function(require,module,exports){
 module.exports = [
   'indeterminate'
 ]
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 module.exports = [
   'svg', 'altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor',
   'animateMotion', 'animateTransform', 'circle', 'clipPath', 'color-profile',
@@ -6284,7 +6364,7 @@ module.exports = [
   'tspan', 'use', 'view', 'vkern'
 ]
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 var assert = require('assert')
 var xtend = require('xtend')
 
@@ -6450,7 +6530,7 @@ function pad (str) {
   return str.length !== 2 ? 0 + str : str
 }
 
-},{"assert":1,"xtend":65}],45:[function(require,module,exports){
+},{"assert":1,"xtend":66}],46:[function(require,module,exports){
 module.exports = LRU
 
 function LRU (opts) {
@@ -6588,7 +6668,7 @@ LRU.prototype.evict = function () {
   this.remove(this.tail)
 }
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var assert = require('assert')
 var morph = require('./lib/morph')
 
@@ -6739,7 +6819,7 @@ function same (a, b) {
   return false
 }
 
-},{"./lib/morph":48,"assert":35}],47:[function(require,module,exports){
+},{"./lib/morph":49,"assert":36}],48:[function(require,module,exports){
 module.exports = [
   // attribute events (can be set with attributes)
   'onclick',
@@ -6783,7 +6863,7 @@ module.exports = [
   'onfocusout'
 ]
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 var events = require('./events')
 var eventsLength = events.length
 
@@ -6949,7 +7029,7 @@ function updateAttribute (newNode, oldNode, name) {
   }
 }
 
-},{"./events":47}],49:[function(require,module,exports){
+},{"./events":48}],50:[function(require,module,exports){
 var reg = /([^?=&]+)(=([^&]*))?/g
 var assert = require('assert')
 
@@ -6966,7 +7046,7 @@ function qs (url) {
   return obj
 }
 
-},{"assert":35}],50:[function(require,module,exports){
+},{"assert":36}],51:[function(require,module,exports){
 'use strict'
 
 var assert = require('assert')
@@ -7003,7 +7083,7 @@ function nanoraf (render, raf) {
   }
 }
 
-},{"assert":35}],51:[function(require,module,exports){
+},{"assert":36}],52:[function(require,module,exports){
 var assert = require('assert')
 var wayfarer = require('wayfarer')
 
@@ -7059,7 +7139,7 @@ function pathname (routename, isElectron) {
   return decodeURI(routename.replace(suffix, '').replace(normalize, '/'))
 }
 
-},{"assert":35,"wayfarer":63}],52:[function(require,module,exports){
+},{"assert":36,"wayfarer":64}],53:[function(require,module,exports){
 var assert = require('assert')
 
 var hasWindow = typeof window !== 'undefined'
@@ -7116,7 +7196,7 @@ NanoScheduler.prototype.setTimeout = function (cb) {
 
 module.exports = createScheduler
 
-},{"assert":35}],53:[function(require,module,exports){
+},{"assert":36}],54:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var assert = require('assert')
 
@@ -7166,7 +7246,7 @@ function noop (cb) {
   }
 }
 
-},{"assert":35,"nanoscheduler":52}],54:[function(require,module,exports){
+},{"assert":36,"nanoscheduler":53}],55:[function(require,module,exports){
 var assert = require('assert')
 
 module.exports = objectChangeCallsite
@@ -7203,7 +7283,7 @@ function strip (str) {
   return '\n' + arr.join('\n')
 }
 
-},{"assert":1}],55:[function(require,module,exports){
+},{"assert":1}],56:[function(require,module,exports){
 /* global MutationObserver */
 var document = require('global/document')
 var window = require('global/window')
@@ -7307,7 +7387,7 @@ function eachMutation (nodes, fn) {
   }
 }
 
-},{"assert":35,"global/document":31,"global/window":32}],56:[function(require,module,exports){
+},{"assert":36,"global/document":32,"global/window":33}],57:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var assert = require('assert')
 
@@ -7367,7 +7447,7 @@ function onPerformance (cb) {
   }
 }
 
-},{"assert":35,"nanoscheduler":52}],57:[function(require,module,exports){
+},{"assert":36,"nanoscheduler":53}],58:[function(require,module,exports){
 module.exports = plucker
 
 function plucker(path, object) {
@@ -7404,7 +7484,7 @@ function pluck(path) {
   }
 }
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 module.exports = prettierBytes
 
 function prettierBytes (num) {
@@ -7436,7 +7516,7 @@ function prettierBytes (num) {
   }
 }
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 'use strict'
 
 /**
@@ -7466,7 +7546,7 @@ module.exports = function removeItems(arr, startIdx, removeCount)
   arr.length = len
 }
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 module.exports = scrollToAnchor
 
 function scrollToAnchor (anchor, options) {
@@ -7478,7 +7558,7 @@ function scrollToAnchor (anchor, options) {
   }
 }
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var fastSafeStringify = require('fast-safe-stringify')
 var copy = require('copy-text-to-clipboard')
 
@@ -7496,7 +7576,7 @@ function stateCopy (obj) {
 module.exports = stateCopy
 
 
-},{"copy-text-to-clipboard":28,"fast-safe-stringify":30}],62:[function(require,module,exports){
+},{"copy-text-to-clipboard":29,"fast-safe-stringify":31}],63:[function(require,module,exports){
 var assert = require('assert')
 
 module.exports = getAllRoutes
@@ -7533,7 +7613,7 @@ function getAllRoutes (router) {
   return transform(tree)
 }
 
-},{"assert":1}],63:[function(require,module,exports){
+},{"assert":1}],64:[function(require,module,exports){
 var assert = require('assert')
 var trie = require('./trie')
 
@@ -7612,7 +7692,7 @@ function Wayfarer (dft) {
   }
 }
 
-},{"./trie":64,"assert":1}],64:[function(require,module,exports){
+},{"./trie":65,"assert":1}],65:[function(require,module,exports){
 var mutate = require('xtend/mutable')
 var assert = require('assert')
 var xtend = require('xtend')
@@ -7750,7 +7830,7 @@ Trie.prototype.mount = function (route, trie) {
   }
 }
 
-},{"assert":1,"xtend":65,"xtend/mutable":66}],65:[function(require,module,exports){
+},{"assert":1,"xtend":66,"xtend/mutable":67}],66:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -7771,7 +7851,7 @@ function extend() {
     return target
 }
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -7790,7 +7870,7 @@ function extend(target) {
     return target
 }
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 function countStore(state, emitter) {
   state.test = {
     count: 0
@@ -7807,7 +7887,28 @@ function countStore(state, emitter) {
 
 module.exports = countStore;
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
+function newResourceStore(state, emitter) {
+  state.newResource = {
+    headerImageUrl:"",
+    title:"",
+    description:"",
+    url:"",
+    tags:""
+  }
+
+  emitter.on('DOMContentLoaded', function() {
+    emitter.on('newResourceStore:addImage', function(imageUrl) {
+      // state.test.count += count
+      state.newResource.headerImageUrl = imageUrl
+      emitter.emit(state.events.RENDER)
+    })
+  });
+}
+
+module.exports = newResourceStore;
+
+},{}],70:[function(require,module,exports){
 function pageStore(state, emitter) {
   state.page = {
     markup: "",
@@ -7844,24 +7945,47 @@ function pageStore(state, emitter) {
 
 module.exports = pageStore;
 
-},{}],69:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 var html = require('choo/html')
 var choo = require('choo')
 
-var countBtn = require("../components/countBtn")
 var ImageSelection = require("../components/ImageSelection")
+let NavBar = require("../components/NavBar");
 
-
-function mainView(state, emit) {
+function selectImageView(state, emit) {
 
   return html `
     <div>
-      ${this.state.cache(countBtn, "countBtn").render()}
+      ${this.state.cache(NavBar, "NavBar").render()}
       ${this.state.cache(ImageSelection, "ImageSelection").render()}
     </div>
   `
 }
 
-module.exports = mainView;
+module.exports = selectImageView;
 
-},{"../components/ImageSelection":11,"../components/countBtn":12,"choo":26,"choo/html":25}]},{},[13]);
+},{"../components/ImageSelection":11,"../components/NavBar":12,"choo":27,"choo/html":26}],72:[function(require,module,exports){
+var html = require('choo/html')
+var choo = require('choo')
+
+var countBtn = require("../components/countBtn")
+let NavBar = require("../components/NavBar");
+
+// ${this.state.cache(countBtn, "countBtn").render()}
+function tagView(state, emit) {
+
+  return html `
+    <div>
+      ${this.state.cache(NavBar, "NavBar").render()}
+      <div>
+        <h1>${this.state.newResource.title}</h1>
+        <h2>${this.state.newResource.description}</h2>
+        <img src=${this.state.newResource.headerImageUrl} />
+      </div>
+    </div>
+  `
+}
+
+module.exports = tagView;
+
+},{"../components/NavBar":12,"../components/countBtn":13,"choo":27,"choo/html":26}]},{},[14]);

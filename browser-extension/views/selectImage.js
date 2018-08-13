@@ -1,18 +1,17 @@
 var html = require('choo/html')
 var choo = require('choo')
 
-var countBtn = require("../components/countBtn")
 var ImageSelection = require("../components/ImageSelection")
+let NavBar = require("../components/NavBar");
 
-
-function mainView(state, emit) {
+function selectImageView(state, emit) {
 
   return html `
     <div>
-      ${this.state.cache(countBtn, "countBtn").render()}
+      ${this.state.cache(NavBar, "NavBar").render()}
       ${this.state.cache(ImageSelection, "ImageSelection").render()}
     </div>
   `
 }
 
-module.exports = mainView;
+module.exports = selectImageView;
