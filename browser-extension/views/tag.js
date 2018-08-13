@@ -13,7 +13,7 @@ function tagView(state, emit) {
       <div>
         <h1>${this.state.newResource.title}</h1>
         <h2>${this.state.newResource.description}</h2>
-        <img src=${this.state.newResource.headerImageUrl} />
+        <img src=${this.state.newResource.headerImageUrl} style="width:100%; max-width:500px"/>
       </div>
     </div>
   `

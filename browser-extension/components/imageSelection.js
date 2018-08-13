@@ -68,7 +68,7 @@ class ImageSelection extends Component {
       <div>
       ${this.state.page.imageLinks.map( (imgLink) => html`
         <a href="/tag">
-          <img alt="..." src=${imgLink} onclick=${this.selectImage}>
+          <img alt="..." src=${imgLink} onclick=${this.selectImage} style="width:100%; max-width:500px">
         </a>
           `) }
       </div>
