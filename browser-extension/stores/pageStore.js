@@ -22,6 +22,9 @@ function pageStore(state, emitter) {
         // state.page.markup = doc;
       var el = document.createElement('html');
       el.innerHTML = markup.data
+
+
+      // TODO: images with relative paths need to be addressed
       let images = Array.from(el.getElementsByTagName("img"))
       state.page.metas = Array.from(el.getElementsByTagName("meta"))
 
@@ -33,7 +36,7 @@ function pageStore(state, emitter) {
       state.newResource.title =  markup.url;
       state.newResource.description =  markup.url;
       state.newResource.url = markup.url;
-      
+
       state.page.metas.forEach(info => {
         // image links
         if (info.getAttribute("property") == "og:image") {
