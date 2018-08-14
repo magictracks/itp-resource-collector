@@ -13,6 +13,14 @@ function pageStore(state, emitter) {
     tags:""
   }
 
+  state.newTutorial = {
+    headerImageUrl:"",
+    title:"",
+    description:"",
+    url:"",
+    tags:""
+  }
+
   emitter.on('DOMContentLoaded', function() {
 
     emitter.on('pageStore:getDOM', function(markup) {
@@ -29,7 +37,9 @@ function pageStore(state, emitter) {
       state.page.metas = Array.from(el.getElementsByTagName("meta"))
 
       images.forEach(img => {
-        state.page.imageLinks.push(img.src)
+        if(img.src.startsWith("https") || img.src.startsWith("http") ){
+            state.page.imageLinks.push(img.src)
+        }
       })
 
       // set the defaults to the url, then update
@@ -62,9 +72,21 @@ function pageStore(state, emitter) {
 
 
 
-    emitter.on('pageStore:addImage', function(imageUrl) {
+    emitter.on('newResource:addImage', function(imageUrl) {
       // state.test.count += count
       state.newResource.headerImageUrl = imageUrl
+      emitter.emit(state.events.RENDER)
+    })
+
+    emitter.on('newResource:update', function(k,v) {
+      // state.test.count += count
+      state.newResource[k] = v;
+      emitter.emit(state.events.RENDER)
+    })
+
+    emitter.on('newTutorial:update', function(k,v) {
+      // state.test.count += count
+      state.newResource[k] = v;
       emitter.emit(state.events.RENDER)
     })
   });

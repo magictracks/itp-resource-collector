@@ -56,19 +56,22 @@ class ImageSelection extends Component {
   selectImage(e){
     // e.preventDefault();
 
+    // let sel = e.target.dataset['src'];
     let sel = e.target.src;
     console.log("select image",sel)
-    this.emit("pageStore:addImage", sel)
+    this.emit("newResource:addImage", sel)
   }
 
   createElement() {
     return html `
-    <div>
-      <h2>Select a cover image</h2>
-      <div>
+    <div class="w-100 flex flex-column items-center">
+      <div class="w-100">
+        <h2>Select a cover image</h2>
+      </div>
+      <div class="w-100 flex flex-wrap flex-row">
       ${this.state.page.imageLinks.map( (imgLink) => html`
-        <a href="/tag">
-          <img alt="..." src=${imgLink} onclick=${this.selectImage} style="width:100%; max-width:500px">
+        <a class="h4 flex flex-column items-center" href="/tag">
+          <img class="h-100" alt="..." src=${imgLink} onclick=${this.selectImage}>
         </a>
           `) }
       </div>
@@ -76,7 +79,8 @@ class ImageSelection extends Component {
     `
   }
 }
-
-
+//
+// width:100px; height:100px;
+// <div class="cover bg-center w-100 h-100" style="background-image:url('${imgLink}')" onclick=${this.selectImage} data-src="${imgLink}"></div>
 
 module.exports = ImageSelection;

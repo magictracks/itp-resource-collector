@@ -43,16 +43,13 @@ class NavBar extends Component {
 
   createElement() {
     return html `
-      <nav>
-        <style>
-          ${this.style}
-        </style>
-        <ul>
-          <li><a href="/">Select Image</a></li>
-          <li>${">"}</li>
-          <li><a href="/tag">Add Info</a></li>
-          <li>${">"}</li>
-          <li><a href="/organize">Organize</a></li>
+      <nav class="w-100 pa2 outline">
+        <ul class="flex flex-row list ul items-center justify-between ma0 pa0">
+          <li class="mr2"><a href="/">Select Image</a></li>
+          <li class="mr2">${">"}</li>
+          <li class="mr2"><a href="/tag">Edit Info</a></li>
+          <li class="mr2">${">"}</li>
+          <li class="list"><a href="/organize">Organize</a></li>
         </ul>
       </nav>
     `
