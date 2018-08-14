@@ -7932,10 +7932,11 @@ function pageStore(state, emitter) {
         state.page.imageLinks.push(img.src)
       })
 
-      // get images
-      // get title
-      // get description
-      // get url
+      // set the defaults to the url, then update
+      state.newResource.title =  markup.url;
+      state.newResource.description =  markup.url;
+      state.newResource.url = markup.url;
+      
       state.page.metas.forEach(info => {
         // image links
         if (info.getAttribute("property") == "og:image") {
@@ -7944,23 +7945,17 @@ function pageStore(state, emitter) {
         // title
         if (info.getAttribute("property") == "og:title"){
           state.newResource.title = info.getAttribute("content")
-        } else{
-          state.newResource.title = markup.url
         }
-
+        // url
         if(info.getAttribute("property") == "og:url"){
           state.newResource.url = info.getAttribute("content")
-        } else{
-          state.newResource.url = markup.url
         }
-
+        // desc
         if (info.getAttribute("property") == "og:description"){
           state.newResource.description = info.getAttribute("content")
-        }else{
-          state.newResource.description = markup.url
         }
-        
       })
+
 
       emitter.emit(state.events.RENDER)
     })
