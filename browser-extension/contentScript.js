@@ -28,8 +28,10 @@
 			// let url = window.location.href;
 			// console.log("get location says: ", url);
 			let markup = document.documentElement.innerHTML;
+			let url = window.location.href;
 			sendResponse({
-				data: markup
+				data: markup,
+				url: url
 			});
 		}
 	});

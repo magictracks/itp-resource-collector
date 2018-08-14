@@ -1,7 +1,8 @@
 function pageStore(state, emitter) {
   state.page = {
     markup: "",
-    imageLinks: []
+    imageLinks: [],
+    metas: []
   }
 
   state.newResource = {
@@ -20,9 +21,9 @@ function pageStore(state, emitter) {
         // let doc = parser.parseFromString(markup, "text/xml");
         // state.page.markup = doc;
       var el = document.createElement('html');
-      el.innerHTML = markup
+      el.innerHTML = markup.data
       let images = Array.from(el.getElementsByTagName("img"))
-      let metas = Array.from(el.getElementsByTagName("meta"))
+      state.page.metas = Array.from(el.getElementsByTagName("meta"))
 
       images.forEach(img => {
         state.page.imageLinks.push(img.src)
@@ -32,16 +33,30 @@ function pageStore(state, emitter) {
       // get title
       // get description
       // get url
-      metas.forEach(info => {
+      state.page.metas.forEach(info => {
+        // image links
         if (info.getAttribute("property") == "og:image") {
           state.page.imageLinks.push(info.getAttribute("content"))
-        } else if (info.getAttribute("property") == "og:title"){
-          state.newResource.title = info.getAttribute("content")
-        } else if (info.getAttribute("property") == "og:url"){
-          state.newResource.url = info.getAttribute("content")
-        }else if (info.getAttribute("property") == "og:description"){
-          state.newResource.description = info.getAttribute("content")
         }
+        // title
+        if (info.getAttribute("property") == "og:title"){
+          state.newResource.title = info.getAttribute("content")
+        } else{
+          state.newResource.title = markup.url
+        }
+
+        if(info.getAttribute("property") == "og:url"){
+          state.newResource.url = info.getAttribute("content")
+        } else{
+          state.newResource.url = markup.url
+        }
+
+        if (info.getAttribute("property") == "og:description"){
+          state.newResource.description = info.getAttribute("content")
+        }else{
+          state.newResource.description = markup.url
+        }
+        
       })
 
       emitter.emit(state.events.RENDER)

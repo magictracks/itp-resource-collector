@@ -38,7 +38,7 @@ class ImageSelection extends Component {
         (response) => {
           // console.log(response);
           // console.log("hello!!")
-          this.emit("pageStore:getDOM", response.data)
+          this.emit("pageStore:getDOM", response)
         });
     });
   }
