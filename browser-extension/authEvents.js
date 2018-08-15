@@ -1,17 +1,16 @@
 (function(){
 
   class AuthProcess {
-    constructor(CALLBACK_URL, CLIENT_ID, CLIENT_SECRET, AUTH_URL){
+    constructor(CALLBACK_URL, CLIENT_ID, CLIENT_SECRET){
       this.authenticated = false;
-      this.CALLBACK_URL = CALLBACK_URL;
+      this.CALLBACK_URL = `https://${chrome.runtime.id}.chromiumapp.org/itp-resource-collector-extension`;
       this.CLIENT_ID = CLIENT_ID;
       this.CLIENT_SECRET = CLIENT_SECRET;
-      this.AUTH_URL = AUTH_URL;
+      this.AUTH_URL = `https://github.com/login/oauth/authorize/?client_id=${this.CLIENT_ID}&redirect_uri=${this.CALLBACK_URL}&scope=public_repo`;;
 
       this.checkStatus = this.checkStatus.bind(this);
       this.handleAuth = this.handleAuth.bind(this);
     }
-
 
 
     function setAuthStatus(status){

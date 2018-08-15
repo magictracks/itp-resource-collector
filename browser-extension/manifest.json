@@ -27,11 +27,9 @@
     "/oauth2/*"
   ],
   "oauth2":{
-    "CALLBACK_URL":,
     "CLIENT_ID":,
-    "CLIENT_SECRET":,
-    "AUTH_URL":
-  }
+    "CLIENT_SECRET":
+  },
 
   "background": {
     "scripts": ["background.js", "axios.min.js", "authEvents.js"]
