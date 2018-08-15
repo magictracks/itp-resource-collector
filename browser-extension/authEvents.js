@@ -84,7 +84,9 @@
 
   } // end class
 
-  
+  // MAKE SURE TO ADD THESE
+  let client_id = ''
+  let client_secret = ''
   let authProcess = new AuthProcess(client_id, client_secret)
   authProcess.checkStatus();
   authProcess.handleAuth();
