@@ -1,13 +1,21 @@
 function authStore(state, emitter) {
-  state.authenticated = false;
+  // state.authenticated = false;
+  // set the initial state
+  chrome.storage.local.get(['authenticated'], (status) => {
+    console.log("from authStore", status.authenticated)
+    state.authenticated = status.authenticated;
+  })
 
   emitter.on('DOMContentLoaded', function() {
 
-    emitter.on('auth:isAuthenticated', function(count) {
-      state.authenticated = true;
-      emitter.emit(state.events.RENDER)
+    emitter.on('auth:isAuthenticated', function() {
+      // check the chrome storage to find if user is auth'd
+      chrome.storage.local.get(['authenticated'], (status) => {
+        console.log("from authStore", status.authenticated)
+        state.authenticated = status.authenticated;
+        emitter.emit(state.events.RENDER)
+      })
     })
-
 
   });
 }

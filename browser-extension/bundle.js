@@ -3999,9 +3999,13 @@ class AuthBtn extends Component {
 
   setState(){
     if(this.state.authenticated === false){
-      console.log(this.state.authenticated)
-    } else{
-      console.log(this.state.authenticated)
+      console.log("not auth'd")
+      // this.emit("auth:isAuthenticated")
+      // this.emit("pushState", "*");
+    } else {
+      console.log("yes auth'd")
+      // this.emit("auth:isAuthenticated")
+      this.emit("pushState", "selectImage");
     }
   }
 
@@ -4011,14 +4015,20 @@ class AuthBtn extends Component {
 
   launchAuth(e){
     console.log("launching auth!")
-
-    chrome.extension.sendMessage({
-	    action: 'launchOauth'
-	  });
+    if(this.state.authenticated === false){
+      console.log("not auth'd")
+      chrome.extension.sendMessage({
+  	    action: 'launchOauth'
+  	  });
+    } else {
+      console.log("yes auth'd")
+      this.emit("pushState", "selectImage");
+    }
 
   }
 
   createElement() {
+
     return html `
     <div class="w-100 flex flex-column items-center">
       <button class="br-100 h4 w4 bg-light-purple b--black bw2 grow f3" onclick=${this.launchAuth}>choo choo!</button>
@@ -4273,10 +4283,12 @@ app.route('/selectImage', selectImageView)
 app.route('/tag', tagView)
 app.route('/organize', organizeView)
 
-app.use((state, emitter) => {                  // 1.
-  emitter.on('navigate', () => {               // 2.
-    console.log(`Navigated to ${state.route}`) // 3.
-  })
+app.use((state, emitter) => {
+  emitter.on('DOMContentLoaded', function() {              // 1.
+    emitter.on('navigate', () => {               // 2.
+      console.log(`Navigated to ${state.route}`) // 3.
+    })
+  });
 })
 
 /* get the dom tree and add */
@@ -8172,15 +8184,23 @@ function extend(target) {
 
 },{}],73:[function(require,module,exports){
 function authStore(state, emitter) {
-  state.authenticated = false;
+  // state.authenticated = false;
+  // set the initial state
+  chrome.storage.local.get(['authenticated'], (status) => {
+    console.log("from authStore", status.authenticated)
+    state.authenticated = status.authenticated;
+  })
 
   emitter.on('DOMContentLoaded', function() {
 
-    emitter.on('auth:isAuthenticated', function(count) {
-      state.authenticated = true;
-      emitter.emit(state.events.RENDER)
+    emitter.on('auth:isAuthenticated', function() {
+      // check the chrome storage to find if user is auth'd
+      chrome.storage.local.get(['authenticated'], (status) => {
+        console.log("from authStore", status.authenticated)
+        state.authenticated = status.authenticated;
+        emitter.emit(state.events.RENDER)
+      })
     })
-
 
   });
 }

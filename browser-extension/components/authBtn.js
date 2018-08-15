@@ -15,9 +15,13 @@ class AuthBtn extends Component {
 
   setState(){
     if(this.state.authenticated === false){
-      console.log(this.state.authenticated)
-    } else{
-      console.log(this.state.authenticated)
+      console.log("not auth'd")
+      // this.emit("auth:isAuthenticated")
+      // this.emit("pushState", "*");
+    } else {
+      console.log("yes auth'd")
+      // this.emit("auth:isAuthenticated")
+      this.emit("pushState", "selectImage");
     }
   }
 
@@ -27,14 +31,20 @@ class AuthBtn extends Component {
 
   launchAuth(e){
     console.log("launching auth!")
-
-    chrome.extension.sendMessage({
-	    action: 'launchOauth'
-	  });
+    if(this.state.authenticated === false){
+      console.log("not auth'd")
+      chrome.extension.sendMessage({
+  	    action: 'launchOauth'
+  	  });
+    } else {
+      console.log("yes auth'd")
+      this.emit("pushState", "selectImage");
+    }
 
   }
 
   createElement() {
+
     return html `
     <div class="w-100 flex flex-column items-center">
       <button class="br-100 h4 w4 bg-light-purple b--black bw2 grow f3" onclick=${this.launchAuth}>choo choo!</button>

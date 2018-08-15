@@ -17,22 +17,21 @@
 
   "permissions": [
     "identity",
-    "storage",
     "tabs",
-    "<all_urls>",
+    "webNavigation",
+    "*://*.google.com/*",
+    "storage",
+    "alarms",
     "contextMenus"
   ],
 
   "web_accessible_resources": [
     "/oauth2/*"
   ],
-  "oauth2":{
-    "CLIENT_ID":,
-    "CLIENT_SECRET":
-  },
 
   "background": {
-    "scripts": ["background.js", "axios.min.js", "authEvents.js"]
+    "scripts": ["axios.min.js",  "authEvents.js", "background.js"],
+    "persistent": false
   },
 
   "content_scripts":[
