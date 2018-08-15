@@ -16,7 +16,7 @@ class NavBar extends Component {
   setActive(routeName){
       if(this.state.route == routeName){
         return "bg-washed-red"
-      } else{
+      } else {
         return "white"
       }
   }
@@ -30,7 +30,7 @@ class NavBar extends Component {
     return html `
       <nav class="w-100 pa2 outline">
         <ul class="flex flex-row list ul items-center justify-between ma0 pa0">
-          <li class="mr2 ${this.setActive('*')}"><a href="/">Select Image</a></li>
+          <li class="mr2 ${this.setActive('selectImage')}"><a href="/selectImage">Select Image</a></li>
           <li class="mr2">${">"}</li>
           <li class="mr2 ${this.setActive('tag')}"><a href="/tag">Edit Info</a></li>
           <li class="mr2">${">"}</li>

@@ -16,13 +16,25 @@
   },
 
   "permissions": [
+    "identity",
+    "storage",
     "tabs",
     "<all_urls>",
     "contextMenus"
   ],
 
+  "web_accessible_resources": [
+    "/oauth2/*"
+  ],
+  "oauth2":{
+    "CALLBACK_URL":,
+    "CLIENT_ID":,
+    "CLIENT_SECRET":,
+    "AUTH_URL":
+  }
+
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js", "axios.min.js", "authEvents.js"]
   },
 
   "content_scripts":[

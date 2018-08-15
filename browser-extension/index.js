@@ -12,17 +12,21 @@ app.use(devtools())
 /* stores */
 var countStore = require('./stores/countStore')
 var pageStore = require('./stores/pageStore')
+var authStore = require('./stores/authStore')
 app.use(countStore)
 app.use(pageStore)
+app.use(authStore)
 
 
 /* views */
 var tagView = require('./views/tag')
 var selectImageView = require('./views/selectImage')
 var organizeView = require('./views/organize')
+var authView = require('./views/auth')
 
 /* Set Routes */
-app.route('/*', selectImageView)
+app.route('/*', authView)
+app.route('/selectImage', selectImageView)
 app.route('/tag', tagView)
 app.route('/organize', organizeView)
 
