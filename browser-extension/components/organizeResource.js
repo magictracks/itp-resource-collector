@@ -18,6 +18,7 @@ class OrganizeResource extends Component {
     this.emit = emit;
     this.handleChange = this.handleChange.bind(this)
     this.closePopup = this.closePopup.bind(this)
+    this.expandNewTutorialMenu = this.expandNewTutorialMenu.bind(this)
   }
 
   update() {
@@ -26,6 +27,13 @@ class OrganizeResource extends Component {
 
   closePopup(e){
     window.close();
+  }
+
+  expandNewTutorialMenu(e){
+    e.preventDefault();
+
+    document.querySelector("#newTutorialMenu").classList.toggle("dn")
+
   }
 
   handleChange(e){
@@ -63,8 +71,8 @@ class OrganizeResource extends Component {
             <option>section 3</option>
           </select>
 
-          <p>...or create/add to new tutorial</p>
-          <fieldset class="mt2 br1">
+          <p onclick=${this.expandNewTutorialMenu}>...or create/add to new tutorial</p>
+          <fieldset id="newTutorialMenu" class="mt2 br1 dn">
             <legend>New Tutorial</legend>
             <form class="mt2" onkeypress="return event.keyCode != 13;">
             <fieldset class="mt2 br1">
