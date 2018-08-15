@@ -38,7 +38,7 @@ class EditResource extends Component {
       <div class="flex flex-column w-100">
         <img class="mt2 h4" src=${this.state.newResource.headerImageUrl}/>
         <form class="mt2" onkeypress="return event.keyCode != 13;">
-          <small>via <a href="${this.state.newResource.url}">${this.state.newResource.url}</a> </small>
+          <small>via <a href="${this.state.newResource.url}" target=_blank rel="noopener noreferrer">${this.state.newResource.url}</a> </small>
           <fieldset class="mt2 br1">
             <legend>Title</legend>
             <input class="w-100 pa2 bn bg-near-white" type="text" placeholder="I'm a title" name="title" onkeyup=${this.handleChange} value=${this.state.newResource.title}/>

@@ -3936,6 +3936,7 @@ module.exports = ImageSelection;
 },{"choo/component":27,"choo/html":28}],12:[function(require,module,exports){
 var Component = require('choo/component')
 var html = require('choo/html')
+var css = 0
   // your store comes from index :)
 
 class NavBar extends Component {
@@ -3944,31 +3945,6 @@ class NavBar extends Component {
 
     this.state = state;
     this.emit = emit;
-
-    this.style = `
-      *{
-        box-sizing: border-box;
-      }
-      nav{
-          width:100%;
-          height:60px;
-          display:flex;
-          flex-direction:column;
-          padding:10px;
-      }
-      ul{
-        list-style:none;
-        margin:0px;
-        display:flex;
-        flex-direction:row;
-        align-items:center;
-        border: 2px solid black;
-      }
-      li{
-        list-style:none;
-        margin-right: 10px;
-      }
-    `
 
   }
 
@@ -4069,7 +4045,7 @@ class EditResource extends Component {
       <div class="flex flex-column w-100">
         <img class="mt2 h4" src=${this.state.newResource.headerImageUrl}/>
         <form class="mt2" onkeypress="return event.keyCode != 13;">
-          <small>via <a href="${this.state.newResource.url}">${this.state.newResource.url}</a> </small>
+          <small>via <a href="${this.state.newResource.url}" target=_blank rel="noopener noreferrer">${this.state.newResource.url}</a> </small>
           <fieldset class="mt2 br1">
             <legend>Title</legend>
             <input class="w-100 pa2 bn bg-near-white" type="text" placeholder="I'm a title" name="title" onkeyup=${this.handleChange} value=${this.state.newResource.title}/>

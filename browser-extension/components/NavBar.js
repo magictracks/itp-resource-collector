@@ -1,5 +1,6 @@
 var Component = require('choo/component')
 var html = require('choo/html')
+var css = require("sheetify")
   // your store comes from index :)
 
 class NavBar extends Component {
@@ -8,31 +9,6 @@ class NavBar extends Component {
 
     this.state = state;
     this.emit = emit;
-
-    this.style = `
-      *{
-        box-sizing: border-box;
-      }
-      nav{
-          width:100%;
-          height:60px;
-          display:flex;
-          flex-direction:column;
-          padding:10px;
-      }
-      ul{
-        list-style:none;
-        margin:0px;
-        display:flex;
-        flex-direction:row;
-        align-items:center;
-        border: 2px solid black;
-      }
-      li{
-        list-style:none;
-        margin-right: 10px;
-      }
-    `
 
   }
 
