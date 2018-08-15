@@ -3,6 +3,12 @@ var html = require('choo/html')
 var css = require('sheetify');
   // your store comes from index :)
 
+  css`
+  fieldset{
+    border:1px solid black;
+  }
+
+  `
 
 class OrganizeResource extends Component {
   constructor(name, state, emit) {
@@ -35,17 +41,18 @@ class OrganizeResource extends Component {
     return html `
     <div>
       <div class="flex flex-column w-100">
-        <div class="flex flex-row w-100">
-            <div class="w-60 flex flex-column">
-              <h3>${this.state.newResource.title}</h3>
-              <small>via <a href="${this.state.newResource.url}">${this.state.newResource.url}</a> </small>
-              <p>${this.state.newResource.description}</p>
+        <div class="flex flex-row w-100 outline h4">
+            <div class="w-60 flex flex-column overflow-y-scroll pa1 h-100">
+              <h3 class="ma0 mb1">${this.state.newResource.title}</h3>
+              <small class="mb1">via <a href="${this.state.newResource.url}">${this.state.newResource.url}</a> </small>
+              <small class="mb1">${this.state.newResource.description} blah blah blah blah blah blah blah blah blah blah blah blah blah </small>
             </div>
-            <div class="w-40 cover bg-center h4" style="background-image:url('${this.state.newResource.headerImageUrl}')"></div>
+            <div class="w-40 cover bg-center h-100 bl" style="background-image:url('${this.state.newResource.headerImageUrl}')"></div>
         </div>
 
-        <div class="w-100 flex flex-column">
-          <select class="mt4">
+        <div class="w-100 flex flex-column mt2">
+          <p>Add to exiting tutorial...</p>
+          <select>
             <option>tutorial 1</option>
             <option>tutorial 2</option>
             <option>tutorial 3</option>
@@ -56,8 +63,8 @@ class OrganizeResource extends Component {
             <option>section 3</option>
           </select>
 
-          <p>...or create new tutorial</p>
-          <fieldset class="mt2">
+          <p>...or create/add to new tutorial</p>
+          <fieldset class="mt2 br1">
             <legend>New Tutorial</legend>
             <form class="mt2" onkeypress="return event.keyCode != 13;">
             <fieldset class="mt2 br1">
@@ -76,12 +83,12 @@ class OrganizeResource extends Component {
           </fieldset>
         </div>
 
-        <div class="w-100 h3 flex flex-row mt4 bg-silver">
-          <a class="w-50">
-            <button onclick=${this.closePopup}>Save & Close</button>
+        <div class="w-100 h3 flex flex-row mt2 justify-center items">
+          <a class="w-50 pa1">
+            <button class="w-100 h-100 pa1 br1">Save & Close</button>
           </a>
-          <a class="w-50">
-            <button>Open in Magic Tracks</button>
+          <a class="w-50 pa1">
+          <button class="w-100 h-100 pa1 br1">Open in Magic Tracks</button>
           </a>
         </div>
 
