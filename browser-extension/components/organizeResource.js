@@ -22,7 +22,7 @@ class OrganizeResource extends Component {
   }
 
   update() {
-    return true
+    return false
   }
 
   closePopup(e){

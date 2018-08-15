@@ -18,7 +18,7 @@ class AuthBtn extends Component {
 
   launchAuth(e){
     console.log("launching auth!")
-    if(this.state.authenticated === false){
+    if(this.state.authenticated === false || this.state.authenticated === undefined){
       console.log("not auth'd")
       chrome.extension.sendMessage({
   	    action: 'launchOauth'
