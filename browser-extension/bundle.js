@@ -3994,19 +3994,6 @@ class AuthBtn extends Component {
     this.emit = emit;
 
     this.launchAuth = this.launchAuth.bind(this)
-    this.setState();
-  }
-
-  setState(){
-    if(this.state.authenticated === false){
-      console.log("not auth'd")
-      // this.emit("auth:isAuthenticated")
-      // this.emit("pushState", "*");
-    } else {
-      console.log("yes auth'd")
-      // this.emit("auth:isAuthenticated")
-      this.emit("pushState", "selectImage");
-    }
   }
 
   update() {
@@ -4028,7 +4015,6 @@ class AuthBtn extends Component {
   }
 
   createElement() {
-
     return html `
     <div class="w-100 flex flex-column items-center">
       <button class="br-100 h4 w4 bg-light-purple b--black bw2 grow f3" onclick=${this.launchAuth}>choo choo!</button>
@@ -8189,6 +8175,13 @@ function authStore(state, emitter) {
   chrome.storage.local.get(['authenticated'], (status) => {
     console.log("from authStore", status.authenticated)
     state.authenticated = status.authenticated;
+
+    if(state.authenticated == true){
+      emitter.emit("pushState", "selectImage")
+    } else{
+      emitter.emit("pushState", "*")
+    }
+
   })
 
   emitter.on('DOMContentLoaded', function() {

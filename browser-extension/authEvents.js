@@ -66,6 +66,7 @@
                 chrome.storage.local.set({"accessToken": accessToken}, () => {
                   console.log("Auth Complete!")
                   this.setAuthStatus(true);
+
                   // UNCHECK TO DEBUG
                   // chrome.storage.local.get(['accessToken'], function(storageObj){
   						    // 		console.log(storageObj)

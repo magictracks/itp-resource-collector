@@ -4,6 +4,13 @@ function authStore(state, emitter) {
   chrome.storage.local.get(['authenticated'], (status) => {
     console.log("from authStore", status.authenticated)
     state.authenticated = status.authenticated;
+
+    if(state.authenticated == true){
+      emitter.emit("pushState", "selectImage")
+    } else{
+      emitter.emit("pushState", "*")
+    }
+
   })
 
   emitter.on('DOMContentLoaded', function() {
