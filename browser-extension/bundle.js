@@ -3946,10 +3946,19 @@ class NavBar extends Component {
     this.state = state;
     this.emit = emit;
 
+    this.setActive = this.setActive.bind(this);
+  }
+
+  setActive(routeName){
+      if(this.state.route == routeName){
+        return "bg-washed-red"
+      } else{
+        return "white"
+      }
   }
 
   update() {
-    return false
+    return true
   }
 
 
@@ -3957,11 +3966,11 @@ class NavBar extends Component {
     return html `
       <nav class="w-100 pa2 outline">
         <ul class="flex flex-row list ul items-center justify-between ma0 pa0">
-          <li class="mr2"><a href="/">Select Image</a></li>
+          <li class="mr2 ${this.setActive('*')}"><a href="/">Select Image</a></li>
           <li class="mr2">${">"}</li>
-          <li class="mr2"><a href="/tag">Edit Info</a></li>
+          <li class="mr2 ${this.setActive('tag')}"><a href="/tag">Edit Info</a></li>
           <li class="mr2">${">"}</li>
-          <li class="list"><a href="/organize">Organize</a></li>
+          <li class="${this.setActive('organize')}"><a href="/organize">Organize</a></li>
         </ul>
       </nav>
     `
@@ -4207,6 +4216,12 @@ var organizeView = require('./views/organize')
 app.route('/*', selectImageView)
 app.route('/tag', tagView)
 app.route('/organize', organizeView)
+
+app.use((state, emitter) => {                  // 1.
+  emitter.on('navigate', () => {               // 2.
+    console.log(`Navigated to ${state.route}`) // 3.
+  })
+})
 
 /* get the dom tree and add */
 let tree = app.start();

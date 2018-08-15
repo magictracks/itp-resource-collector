@@ -26,6 +26,12 @@ app.route('/*', selectImageView)
 app.route('/tag', tagView)
 app.route('/organize', organizeView)
 
+app.use((state, emitter) => {                  // 1.
+  emitter.on('navigate', () => {               // 2.
+    console.log(`Navigated to ${state.route}`) // 3.
+  })
+})
+
 /* get the dom tree and add */
 let tree = app.start();
 document.querySelector("#App").appendChild(tree);
