@@ -36,7 +36,9 @@ class EditResource extends Component {
     return html `
     <div>
       <div class="flex flex-column w-100">
-        <img class="mt2 h4" src=${this.state.newResource.headerImageUrl}/>
+        <div class="w-100 h4 flex flex-column items-center">
+        <img class="h4" src=${this.state.newResource.headerImageUrl}/>
+        </div>
         <form class="mt2" onkeypress="return event.keyCode != 13;">
           <small>via <a href="${this.state.newResource.url}" target=_blank rel="noopener noreferrer">${this.state.newResource.url}</a> </small>
           <fieldset class="mt2 br1">
