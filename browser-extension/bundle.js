@@ -4070,6 +4070,7 @@ var html = require('choo/html')
 var css = 0;
   // your store comes from index :)
 
+
 ;((require('sheetify/insert')("fieldset{\n  border:1px solid black;\n}") || true) && "_151e981c")
 
 class EditResource extends Component {
@@ -4079,6 +4080,7 @@ class EditResource extends Component {
     this.state = state;
     this.emit = emit;
     this.handleChange = this.handleChange.bind(this)
+
   }
 
   update() {
@@ -4128,6 +4130,47 @@ class EditResource extends Component {
 
 
 module.exports = EditResource;
+
+
+    //
+    // let taggingSuggestions = [];
+    // $.get( "http://127.0.0.1:5000/api/tags", function(data) {
+    //     taggingSuggestions = data.map(item => {
+    //       return {"value": item, "text": item}
+    //     })
+    //   })
+    //   .fail(function() {
+    //     taggingSuggestions = [
+    //         { value: 'javascript', text: 'javascript' },
+    //         { value: 'coding train', text: 'coding train' },
+    //         { value: 'machine learning', text: 'machine learning' },
+    //         { value: 'creative coding', text: 'creative coding' }
+    //     ];
+    //   }).always(function() {
+    //     $multiSelect.selectize({
+    //         plugins: ['remove_button'],
+    //         options: taggingSuggestions,
+    //         placeholder: "add tags e.g. javascript, concept",
+    //         delimiter: ',',
+    //         persist: false,
+    //         create: function(input) {
+    //             return {
+    //                 value: input,
+    //                 text: input
+    //             }
+    //         },
+    //         onChange: function(value) {
+    //             console.log(value)
+    //
+    //             let count;
+    //             if (value) count = value.split(",").length;
+    //             if (!value) count = 0;
+    //
+    //             outputData.tags = value.split(","); // save to output
+    //             $previewTagCount.html(count)
+    //         }
+    //     });
+    //   });
 
 },{"choo/component":28,"choo/html":29,"sheetify/insert":66}],16:[function(require,module,exports){
 var Component = require('choo/component')
@@ -4180,7 +4223,7 @@ class OrganizeResource extends Component {
             <div class="w-60 flex flex-column overflow-y-scroll pa1 h-100">
               <h3 class="ma0 mb1">${this.state.newResource.title}</h3>
               <small class="mb1">via <a href="${this.state.newResource.url}">${this.state.newResource.url}</a> </small>
-              <small class="mb1">${this.state.newResource.description} blah blah blah blah blah blah blah blah blah blah blah blah blah </small>
+              <small class="mb1">${this.state.newResource.description}  </small>
             </div>
             <div class="w-40 cover bg-center h-100 bl" style="background-image:url('${this.state.newResource.headerImageUrl}')"></div>
         </div>
@@ -4197,6 +4240,10 @@ class OrganizeResource extends Component {
             <option>section 2</option>
             <option>section 3</option>
           </select>
+          <div class="w-100 flex flex-row items-center mt1">
+            <label class="mr1">+</label>
+            <input type="text" placeholder= "new section title" />
+          </div>
 
           <p onclick=${this.expandNewTutorialMenu}>...or create/add to new tutorial</p>
           <fieldset id="newTutorialMenu" class="mt2 br1 dn">

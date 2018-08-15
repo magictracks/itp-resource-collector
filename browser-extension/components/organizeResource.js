@@ -53,7 +53,7 @@ class OrganizeResource extends Component {
             <div class="w-60 flex flex-column overflow-y-scroll pa1 h-100">
               <h3 class="ma0 mb1">${this.state.newResource.title}</h3>
               <small class="mb1">via <a href="${this.state.newResource.url}">${this.state.newResource.url}</a> </small>
-              <small class="mb1">${this.state.newResource.description} blah blah blah blah blah blah blah blah blah blah blah blah blah </small>
+              <small class="mb1">${this.state.newResource.description}  </small>
             </div>
             <div class="w-40 cover bg-center h-100 bl" style="background-image:url('${this.state.newResource.headerImageUrl}')"></div>
         </div>
@@ -70,6 +70,10 @@ class OrganizeResource extends Component {
             <option>section 2</option>
             <option>section 3</option>
           </select>
+          <div class="w-100 flex flex-row items-center mt1">
+            <label class="mr1">+</label>
+            <input type="text" placeholder= "new section title" />
+          </div>
 
           <p onclick=${this.expandNewTutorialMenu}>...or create/add to new tutorial</p>
           <fieldset id="newTutorialMenu" class="mt2 br1 dn">

@@ -3,6 +3,7 @@ var html = require('choo/html')
 var css = require('sheetify');
   // your store comes from index :)
 
+
 css`
 fieldset{
   border:1px solid black;
@@ -17,6 +18,7 @@ class EditResource extends Component {
     this.state = state;
     this.emit = emit;
     this.handleChange = this.handleChange.bind(this)
+
   }
 
   update() {
@@ -66,3 +68,44 @@ class EditResource extends Component {
 
 
 module.exports = EditResource;
+
+
+    //
+    // let taggingSuggestions = [];
+    // $.get( "http://127.0.0.1:5000/api/tags", function(data) {
+    //     taggingSuggestions = data.map(item => {
+    //       return {"value": item, "text": item}
+    //     })
+    //   })
+    //   .fail(function() {
+    //     taggingSuggestions = [
+    //         { value: 'javascript', text: 'javascript' },
+    //         { value: 'coding train', text: 'coding train' },
+    //         { value: 'machine learning', text: 'machine learning' },
+    //         { value: 'creative coding', text: 'creative coding' }
+    //     ];
+    //   }).always(function() {
+    //     $multiSelect.selectize({
+    //         plugins: ['remove_button'],
+    //         options: taggingSuggestions,
+    //         placeholder: "add tags e.g. javascript, concept",
+    //         delimiter: ',',
+    //         persist: false,
+    //         create: function(input) {
+    //             return {
+    //                 value: input,
+    //                 text: input
+    //             }
+    //         },
+    //         onChange: function(value) {
+    //             console.log(value)
+    //
+    //             let count;
+    //             if (value) count = value.split(",").length;
+    //             if (!value) count = 0;
+    //
+    //             outputData.tags = value.split(","); // save to output
+    //             $previewTagCount.html(count)
+    //         }
+    //     });
+    //   });
