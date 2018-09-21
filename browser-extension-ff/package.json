@@ -1,0 +1,22 @@
+{
+  "name": "browser-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "budo index.js -t sheetify index.js -o bundle.js",
+    "start": "http-server",
+    "make": "bankai start index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "choo": "^6.13.0",
+    "choo-devtools": "^2.5.1",
+    "jquery": "^3.3.1",
+    "selectize": "^0.12.6",
+    "sheetify": "^7.3.3",
+    "tachyons": "^4.11.1"
+  }
+}
