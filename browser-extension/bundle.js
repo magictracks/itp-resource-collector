@@ -3913,12 +3913,12 @@ class ImageSelection extends Component {
   createElement() {
     return html `
     <div class="w-100 flex flex-column items-center">
-      <div class="w-100">
+      <div class="w-100 tc">
         <h2>Select a cover image</h2>
       </div>
-      <div class="w-100 flex flex-wrap flex-row">
+      <div class="w-100 flex flex-wrap flex-column">
       ${this.state.page.imageLinks.map( (imgLink) => html`
-        <a class="h4 flex flex-column items-center" href="/tag">
+        <a class="h4 flex flex-column items-center pa1 grow glow" href="/tag">
           <img class="h-100" alt="..." src=${imgLink} onclick=${this.selectImage}>
         </a>
           `) }
@@ -3961,9 +3961,10 @@ class NavBar extends Component {
     return true
   }
 
-
   createElement() {
     return html `
+      <div class="w-100">
+      <small>Hello, ${this.state.currentUser}</small>
       <nav class="w-100 pa2 outline">
         <ul class="flex flex-row list ul items-center justify-between ma0 pa0">
           <li class="mr2 ${this.setActive('selectImage')}"><a href="/selectImage">Select Image</a></li>
@@ -3973,6 +3974,7 @@ class NavBar extends Component {
           <li class="${this.setActive('organize')}"><a href="/organize">Organize</a></li>
         </ul>
       </nav>
+      </div>
     `
   }
 }
@@ -4189,10 +4191,18 @@ class OrganizeResource extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.closePopup = this.closePopup.bind(this)
     this.expandNewTutorialMenu = this.expandNewTutorialMenu.bind(this)
+    this.selectTutorial = this.selectTutorial.bind(this)
+    this.displayNone = 'dn';
+    // this.setState();
   }
 
+  // setState(){
+  //
+  //   // document.querySelector("#newTutorialMenu").classList.toggle("dn")
+  // }
+
   update() {
-    return false
+    return true
   }
 
   closePopup(e){
@@ -4202,18 +4212,39 @@ class OrganizeResource extends Component {
   expandNewTutorialMenu(e){
     e.preventDefault();
 
-    document.querySelector("#newTutorialMenu").classList.toggle("dn")
+    this.emit("newTutorial:menuToggled");
 
+    if(this.state.newTutorial.menuToggled == false){
+      this.displayNone = "dn";
+    } else{
+      this.displayNone = "";
+    }
+
+  }
+
+  selectTutorial(e){
+    e.preventDefault();
+
+    console.log(e.target.value)
+
+    this.emit("existingTutorial:selected", e.target.value)
   }
 
   handleChange(e){
     e.preventDefault();
-    console.log(e.target)
+    console.log(e.target.name, e.target.value)
     let k  = e.target.name;
     let val = e.target.value;
     this.emit("newTutorial:update", k, val)
   }
 
+  /**
+   * ${this.state.existingTutorials.data.filter( (tutorial) => {
+     if(tutorial.id == this.state.existingTutorials.selectedId){
+       return  tutorial.sections.map( (section) => html`<option value=${section.id}>${section.title}</option>` )
+     }
+   })}
+   */
   createElement() {
 
     return html `
@@ -4230,23 +4261,30 @@ class OrganizeResource extends Component {
 
         <div class="w-100 flex flex-column mt2">
           <p>Add to exiting tutorial...</p>
-          <select>
-            <option>tutorial 1</option>
-            <option>tutorial 2</option>
-            <option>tutorial 3</option>
+          <fieldset class="w-100 flex flex-column br1">
+          <legend>Your Tutorials</legend>
+          <select class="w-100" onchange=${this.selectTutorial}>
+            ${this.state.existingTutorials.data.map( (tutorial) => {
+              if(tutorial.id == this.state.existingTutorials.selectedId){
+                return html`<option value=${tutorial.id} selected>${tutorial.title}</option>`
+              } else{
+                return html`<option value=${tutorial.id}>${tutorial.title}</option>`
+              }
+            })}
           </select>
-          <select class="mt2">
-            <option>section 1</option>
-            <option>section 2</option>
-            <option>section 3</option>
+          <select class="mt2 w-100">
+            ${this.state.existingTutorials.data[this.state.existingTutorials.selectedPosition].sections.map( (section) => {
+              return html`<option value=${section.properties.id}>${section.properties.title}</option>`
+            })}
           </select>
           <div class="w-100 flex flex-row items-center mt1">
             <label class="mr1">+</label>
             <input type="text" placeholder= "new section title" />
           </div>
+          </fieldset>
 
-          <p onclick=${this.expandNewTutorialMenu}>...or create/add to new tutorial</p>
-          <fieldset id="newTutorialMenu" class="mt2 br1 dn">
+          <p class="pointer dim" onclick=${this.expandNewTutorialMenu}>...or create/add to new tutorial</p>
+          <fieldset id="newTutorialMenu" class="mt2 br1 ${this.displayNone}">
             <legend>New Tutorial</legend>
             <form class="mt2" onkeypress="return event.keyCode != 13;">
             <fieldset class="mt2 br1">
@@ -8219,6 +8257,10 @@ function extend(target) {
 function authStore(state, emitter) {
   // state.authenticated = false;
   // set the initial state
+
+  state.currentUser ="Not Logged In"
+
+  // get authenticated
   chrome.storage.local.get(['authenticated'], (status) => {
     console.log("from authStore", status.authenticated)
     state.authenticated = status.authenticated;
@@ -8230,6 +8272,13 @@ function authStore(state, emitter) {
     }
 
   })
+
+  // get user name
+  chrome.storage.local.get(['ghUsername'], (user) => {
+    state.currentUser = user.ghUsername;
+  })
+
+
 
   emitter.on('DOMContentLoaded', function() {
 
@@ -8272,6 +8321,71 @@ function pageStore(state, emitter) {
     metas: []
   }
 
+  // TODO: Get the existing tutorials from a db
+  state.existingTutorials = {
+    selectedId: "uid1",
+    selectedPosition:0,
+    selectedSectionId:"",
+    selectedSectionPosition:"",
+    data: [
+    {
+      title: "tutorial 1",
+      description: "I'm a description",
+      headerImageUrl: "https://user-images.githubusercontent.com/3622055/42908563-4778bd04-8aaf-11e8-95c1-47e18c0643a4.png",
+      id: "uid1",
+      sections:[
+        {
+          position: 0,
+          id: "",
+          tutorialId: "uid1",
+          properties: {
+            title:"I'm a section title 1",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        },
+        {
+          position: 1,
+          id: "",
+          tutorialId: "uid1",
+          properties: {
+            title:"I'm a section title 2",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        }
+      ]
+    },{
+      title: "tutorial 2",
+      description: "I'm a description",
+      headerImageUrl: "https://user-images.githubusercontent.com/3622055/42908563-4778bd04-8aaf-11e8-95c1-47e18c0643a4.png",
+      id: "uid2",
+      sections:[
+        {
+          position: 0,
+          id: "",
+          tutorialId: "uid2",
+          properties: {
+            title:"I'm a section title b",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        },
+        {
+          position: 1,
+          id: "",
+          tutorialId: "uid2",
+          properties: {
+            title:"I'm a section title c",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        }
+      ]
+    }
+    ]
+  };
+
   state.newResource = {
     headerImageUrl:"",
     title:"",
@@ -8281,6 +8395,7 @@ function pageStore(state, emitter) {
   }
 
   state.newTutorial = {
+    menuToggled: false,
     headerImageUrl:"",
     title:"",
     description:"",
@@ -8353,9 +8468,30 @@ function pageStore(state, emitter) {
 
     emitter.on('newTutorial:update', function(k,v) {
       // state.test.count += count
-      state.newResource[k] = v;
+      state.newTutorial[k] = v;
       emitter.emit(state.events.RENDER)
     })
+
+    emitter.on('newTutorial:menuToggled', function() {
+      // state.test.count += count
+      state.newTutorial.menuToggled = !state.newTutorial.menuToggled;
+      emitter.emit(state.events.RENDER)
+    })
+
+
+    emitter.on('existingTutorial:selected', function(uid) {
+      // state.test.count += count
+      // state.newTutorial.menuToggled = !state.newTutorial.menuToggled;
+      state.existingTutorials.selectedId = uid;
+      state.existingTutorials.data.forEach( (tutorial, idx) => {
+        if (tutorial.id == uid) state.existingTutorials.selectedPosition = idx }
+      );
+
+      emitter.emit(state.events.RENDER)
+    })
+
+
+
   });
 }
 

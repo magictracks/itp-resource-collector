@@ -29,7 +29,7 @@
     checkStatus(){
       chrome.runtime.onInstalled.addListener( () => {
         chrome.storage.local.get(['authenticated'], (storageObj) => {
-          if(storageObj === undefined){
+          if(storageObj === undefined ){
             this.setAuthStatus(false);
           }
         });
@@ -60,8 +60,27 @@
                 method: 'post',
                 url: oAuthEndPoint
               }).then( (response) => {
+
+
                 // the response will be a magical access token
                 let accessToken = response.data.split('&')[0].split('=')[1];
+
+                /**
+                 * get the user and set to storage
+                 */
+                axios({
+                  method:"get",
+                  url:`https://api.github.com/user?access_token=${accessToken}`
+                }).then( (ghUser) => {
+
+                  chrome.storage.local.set({"ghUsername": ghUser.data.login}, () => {
+                    console.log("set user!")
+                  })
+                  chrome.storage.local.set({"ghUserId": ghUser.data.id}, () => {
+                    console.log("set user id!")
+                  })
+
+                })
                 // set the accesstoken in chrome storage
                 chrome.storage.local.set({"accessToken": accessToken}, () => {
                   console.log("Auth Complete!")
