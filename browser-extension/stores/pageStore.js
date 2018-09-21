@@ -5,6 +5,71 @@ function pageStore(state, emitter) {
     metas: []
   }
 
+  // TODO: Get the existing tutorials from a db
+  state.existingTutorials = {
+    selectedId: "uid1",
+    selectedPosition:0,
+    selectedSectionId:"",
+    selectedSectionPosition:"",
+    data: [
+    {
+      title: "tutorial 1",
+      description: "I'm a description",
+      headerImageUrl: "https://user-images.githubusercontent.com/3622055/42908563-4778bd04-8aaf-11e8-95c1-47e18c0643a4.png",
+      id: "uid1",
+      sections:[
+        {
+          position: 0,
+          id: "",
+          tutorialId: "uid1",
+          properties: {
+            title:"I'm a section title 1",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        },
+        {
+          position: 1,
+          id: "",
+          tutorialId: "uid1",
+          properties: {
+            title:"I'm a section title 2",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        }
+      ]
+    },{
+      title: "tutorial 2",
+      description: "I'm a description",
+      headerImageUrl: "https://user-images.githubusercontent.com/3622055/42908563-4778bd04-8aaf-11e8-95c1-47e18c0643a4.png",
+      id: "uid2",
+      sections:[
+        {
+          position: 0,
+          id: "",
+          tutorialId: "uid2",
+          properties: {
+            title:"I'm a section title b",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        },
+        {
+          position: 1,
+          id: "",
+          tutorialId: "uid2",
+          properties: {
+            title:"I'm a section title c",
+            description:"I'm a section description",
+            headerImageUrl:""
+          }
+        }
+      ]
+    }
+    ]
+  };
+
   state.newResource = {
     headerImageUrl:"",
     title:"",
@@ -14,6 +79,7 @@ function pageStore(state, emitter) {
   }
 
   state.newTutorial = {
+    menuToggled: false,
     headerImageUrl:"",
     title:"",
     description:"",
@@ -86,9 +152,30 @@ function pageStore(state, emitter) {
 
     emitter.on('newTutorial:update', function(k,v) {
       // state.test.count += count
-      state.newResource[k] = v;
+      state.newTutorial[k] = v;
       emitter.emit(state.events.RENDER)
     })
+
+    emitter.on('newTutorial:menuToggled', function() {
+      // state.test.count += count
+      state.newTutorial.menuToggled = !state.newTutorial.menuToggled;
+      emitter.emit(state.events.RENDER)
+    })
+
+
+    emitter.on('existingTutorial:selected', function(uid) {
+      // state.test.count += count
+      // state.newTutorial.menuToggled = !state.newTutorial.menuToggled;
+      state.existingTutorials.selectedId = uid;
+      state.existingTutorials.data.forEach( (tutorial, idx) => {
+        if (tutorial.id == uid) state.existingTutorials.selectedPosition = idx }
+      );
+
+      emitter.emit(state.events.RENDER)
+    })
+
+
+
   });
 }
 

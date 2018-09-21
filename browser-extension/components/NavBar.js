@@ -25,9 +25,10 @@ class NavBar extends Component {
     return true
   }
 
-
   createElement() {
     return html `
+      <div class="w-100">
+      <small>Hello, ${this.state.currentUser}</small>
       <nav class="w-100 pa2 outline">
         <ul class="flex flex-row list ul items-center justify-between ma0 pa0">
           <li class="mr2 ${this.setActive('selectImage')}"><a href="/selectImage">Select Image</a></li>
@@ -37,6 +38,7 @@ class NavBar extends Component {
           <li class="${this.setActive('organize')}"><a href="/organize">Organize</a></li>
         </ul>
       </nav>
+      </div>
     `
   }
 }

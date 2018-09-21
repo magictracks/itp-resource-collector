@@ -65,12 +65,12 @@ class ImageSelection extends Component {
   createElement() {
     return html `
     <div class="w-100 flex flex-column items-center">
-      <div class="w-100">
+      <div class="w-100 tc">
         <h2>Select a cover image</h2>
       </div>
-      <div class="w-100 flex flex-wrap flex-row">
+      <div class="w-100 flex flex-wrap flex-column">
       ${this.state.page.imageLinks.map( (imgLink) => html`
-        <a class="h4 flex flex-column items-center" href="/tag">
+        <a class="h4 flex flex-column items-center pa1 grow glow" href="/tag">
           <img class="h-100" alt="..." src=${imgLink} onclick=${this.selectImage}>
         </a>
           `) }
