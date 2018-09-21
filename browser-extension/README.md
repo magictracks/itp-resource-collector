@@ -2,13 +2,18 @@
 
 ## Setup
 
+make sure `budo` is installed
+
+```
+npm install budo -g
+```
+
+
+then install dependencies
+and run the `build` command to enable budo to auto reload
+
+
 ```
 npm install
-npm build
-```
-
-then
-
-```
-npm start
+npm run build
 ```

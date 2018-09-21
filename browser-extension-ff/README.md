@@ -2,13 +2,24 @@
 
 ## Setup
 
+make sure `budo` is installed
+
+```
+npm install budo -g
+```
+
+
+then install dependencies
+and run the `build` command to enable budo to auto reload
+
+
 ```
 npm install
-npm build
+npm run build
 ```
 
-then
+run `web-ext` for automatic update of the extension
 
 ```
-npm start
+web-ext run
 ```
